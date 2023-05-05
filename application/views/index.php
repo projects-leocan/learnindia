@@ -1,7 +1,8 @@
 <style>
-
+.setLoader {
+    background: url(img/loading.gif) 50% no-repeat;
+}
 </style>
-
 <!-- HEADER -->
 <main>
     <section>
@@ -11,10 +12,10 @@
             <div class="caption container">
                 <h1>Key To Success</h1>
                 <p id="keyToSuccessContent">
-                    <div class="fulfilling-bouncing-circle-spinner">
-                        <div class="circle"></div>
-                        <div class="orbit"></div>
-                    </div>
+                <div class="fulfilling-bouncing-circle-spinner">
+                    <div class="circle"></div>
+                    <div class="orbit"></div>
+                </div>
                 </p>
                 <div class="button">
                     Contact us
@@ -34,29 +35,19 @@
                 <div class="underline-class"></div>
                 <div class="row">
                     <div class="col-6 p-tag">
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. and scrambled
-                            it
-                            to make a type specimen book.
-                        </p>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                            has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer
-                            took a
-                            galley of type and scrambled it to make a type specimen book.
-                        </p>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                            has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer
-                            took a
-                            galley of type and scrambled it to make a type specimen book.
+
+                        <div class="fulfilling-bouncing-circle-spinner mx-auto" >
+                            <div class="circle"></div>
+                            <div class="orbit"></div>
+                        </div>
+                        
+                        <p id="careerHelpContent">
+
                         </p>
                     </div>
-                    <div class="col-6 help-image">
-                        <img src="img/col-3 (1).jpg">
-                        <img src="img/col-3 (2).jpg">
+                    <div class="col-6 help-image" id="appendImages">
+                        <!-- <img id="careerHelpImg1" class="setLoader" decoding="async" src="">
+                        <img id="careerHelpImg2" class="setLoader" decoding="async" src=""> -->
                     </div>
 
                 </div>
