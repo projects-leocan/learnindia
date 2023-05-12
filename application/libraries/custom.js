@@ -18,6 +18,14 @@ $(document).ready(() => {
     if (window.location.href == base_url) {
         setKeyToSuccess();
         setGauidanceHelp();
+        setJourneyContent();
+        setCounsellingContent();
+        setSucessContent();
+    }
+
+    if (window.location.href == base_url + 'aboutUs')  {
+        setAboutContent();
+        setInnerAboutContent();
     }
 
 
@@ -104,7 +112,6 @@ function setGauidanceHelp() {
             // showLoader();
             hideLoader();
             if (data.success) {
-                console.log("data :",data);
                 $("#careerHelpContent").html(data.Response.content);
 
                 // // create new Image objects for the images
@@ -126,6 +133,146 @@ function setGauidanceHelp() {
                 img1.src = `${image_url}${data.Response.image}`;
                 img2.src = `${image_url}${data.Response.image2}`;
 
+            }
+        },
+    });
+}
+
+
+
+//  Career journey section 
+function setJourneyContent() {
+    showLoader();
+    $.ajax({
+        url: host_url + 'fetchJourneyContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                $("#careerJourneyContent").html(data.Response.content);
+            }
+        },
+    });
+}
+
+//  Career journey section 
+function setCounsellingContent() {
+    showLoader();
+    $.ajax({
+        url: host_url + 'fetchCounselingContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                $("#counsellingHeading").html(data.Response.heading);
+                $("#counsellingContent").html(data.Response.content);
+            }
+        },
+    });
+}
+
+// Our Student Success Stories!
+function setSucessContent() {
+    showLoader();
+    $.ajax({
+        url: host_url + 'fetchSuccessStory',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                data.Response.map((currentStory)=>{
+                    let storyContent = `
+                    <div class="col-6 temonial-1">
+                        <img src="img/right-quotation-mark.png" alt="right-quotation-mark">
+                        <h4 id="studentName">${currentStory.student_name}</h4>
+                        <p id="studentStory">
+                        ${currentStory.content}
+                        </p>
+                        <div class="button">Read More</div>
+                    </div>`;
+
+                    $("#addSuccessStory").append(storyContent);
+                })
+
+            }
+        },
+    });
+}
+
+// ABOUT US 
+function setAboutContent() {
+    showLoader();
+    $.ajax({
+        url: host_url + 'fetchAbout',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                $("#aboutMain").html(data.Response.content);
+            }
+        },
+    });
+}
+
+function setInnerAboutContent() {
+    showLoader();
+    $.ajax({
+        url: host_url + 'fetchAboutInner',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                $("#aboutInner").html(data.Response.content);
             }
         },
     });
