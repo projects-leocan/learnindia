@@ -27,10 +27,10 @@
                 <div class="underline-class"></div>
                 <div class="sub-title">
                     <p id="aboutInner">
-                        <div class="fulfilling-bouncing-circle-spinner mx-auto">
-                            <div class="circle"></div>
-                            <div class="orbit"></div>
-                        </div>
+                    <div class="fulfilling-bouncing-circle-spinner mx-auto">
+                        <div class="circle"></div>
+                        <div class="orbit"></div>
+                    </div>
                     </p>
                     <div class="new-btn">
                         Find your right fit
@@ -45,11 +45,16 @@
             <div class="inner-details container">
                 <h1>We are proud of helping students to reach their dream college - India and abroad!</h1>
                 <div class="underline-class"></div>
-                <div class="images">
-                    <img src="img/school.png" alt="school">
+                <div class="images" id="setEducationLogo">
+                    <div class="fulfilling-bouncing-circle-spinner mx-auto">
+                        <div class="circle"></div>
+                        <div class="orbit"></div>
+                    </div>
+
+                    <!-- <img src="img/school.png" alt="school">
                     <img src="img/education.png" alt="education">
                     <img src="img/school.png" alt="school">
-                    <img src="img/education.png" alt="education">
+                    <img src="img/education.png" alt="education"> -->
                 </div>
             </div>
         </div>
@@ -61,12 +66,17 @@
                 <h1>Our team</h1>
             </div>
             <div class="underline-class"></div>
-            <div class="img-2">
-                <div class="img-1">
+            <div class="img-2" id="appendTeamMembers">
+
+                <div class="fulfilling-bouncing-circle-spinner mx-auto">
+                    <div class="circle"></div>
+                    <div class="orbit"></div>
+                </div>
+                <!-- <div class="img-1">
                     <img src="img/smith (1).jpg" alt="smith">
                     <span>LORA SMITH</span>
-                </div>
-                <div class="img-1">
+                </div> -->
+                <!-- <div class="img-1">
                     <img src="img/smith (2).jpg" alt="smith">
                     <span>LORA SMITH</span>
                 </div>
@@ -77,7 +87,7 @@
                 <div class="img-1">
                     <img src="img/smith (4).jpg" alt="smith">
                     <span>LORA SMITH</span>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>

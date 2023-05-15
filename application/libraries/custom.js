@@ -23,9 +23,24 @@ $(document).ready(() => {
         setSucessContent();
     }
 
+    if (window.location.href == base_url + 'home') {
+        setKeyToSuccess();
+        setGauidanceHelp();
+        setJourneyContent();
+        setCounsellingContent();
+        setSucessContent();
+    }
+
     if (window.location.href == base_url + 'aboutUs')  {
         setAboutContent();
         setInnerAboutContent();
+        setEducationLogo();
+        setTeamMembers();
+    }
+    if (window.location.href == base_url + 'blog')  {
+        setBlogContent();
+        setInnerBlogContent();
+     
     }
 
 
@@ -65,7 +80,6 @@ $("#contactPage").on("click", function (event) {
 
 // Key to success page content 
 function setKeyToSuccess() {
-    showLoader();
     $.ajax({
         url: host_url + 'fetchKeyToSuccess',
         method: 'get',
@@ -142,7 +156,6 @@ function setGauidanceHelp() {
 
 //  Career journey section 
 function setJourneyContent() {
-    showLoader();
     $.ajax({
         url: host_url + 'fetchJourneyContent',
         method: 'get',
@@ -231,7 +244,6 @@ function setSucessContent() {
 
 // ABOUT US 
 function setAboutContent() {
-    showLoader();
     $.ajax({
         url: host_url + 'fetchAbout',
         method: 'get',
@@ -255,7 +267,6 @@ function setAboutContent() {
 }
 
 function setInnerAboutContent() {
-    showLoader();
     $.ajax({
         url: host_url + 'fetchAboutInner',
         method: 'get',
@@ -273,6 +284,106 @@ function setInnerAboutContent() {
             hideLoader();
             if (data.success) {
                 $("#aboutInner").html(data.Response.content);
+            }
+        },
+    });
+}
+function setEducationLogo() {
+    $.ajax({
+        url: host_url + 'fetchEducationLogo',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                data.Response.map((logo)=>{
+                    $("#setEducationLogo").append(` <img src="${image_url}${logo.image}" alt="school">`);
+                })
+            }
+        },
+    });
+}
+
+function setTeamMembers() {
+    $.ajax({
+        url: host_url + 'fetchTeamMember',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                data.Response.map((currentTeacher)=>{
+                    $("#appendTeamMembers").append(`
+                    <div class="img-1">
+                        <img src="${image_url}${currentTeacher.image}" alt="smith">
+                        <span>${currentTeacher.teacher_name}</span>
+                    </div>`);
+                })
+            }
+        },
+    });
+}
+
+// BLOG SECTION
+function setBlogContent() {
+    $.ajax({
+        url: host_url + 'fetchBlogContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                $("#blogContent").html(data.Response.content);
+            }
+        },
+    });
+}
+
+function setInnerBlogContent() {
+    $.ajax({
+        url: host_url + 'fetchblogInnerContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                $("#blogInnerContent").html(data.Response.content);
             }
         },
     });
