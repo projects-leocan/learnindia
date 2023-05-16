@@ -7,12 +7,12 @@
                 <div class="overlay"></div>
                 <div class="caption container">
                     <h1>Survey</h1>
-                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
-                        classical Latin literature from 45 BC, making it over 2000 years old.Please email us with
-                        details if you can help.Lorem Ipsum is simply dummy text of the printing and typesetting
-                        industry. Lorem Ipsum has been the industry's standard dummy text ever since the It has survived
-                        not only five centuries, but also the leap into electronic typesetting, remaining essentially
-                        unchanged.</p>
+                    <p id="setServeyContent"> 
+                        <div class="fulfilling-bouncing-circle-spinner">
+                            <div class="circle"></div>
+                            <div class="orbit"></div>
+                        </div>
+                    </p>
                 </div>
             </div>
         </section>
@@ -142,8 +142,8 @@
                 </div>
                 <div class="pagination">
                     <a href="#">&laquo;</a>
-                    <a href="#">1</a>
-                    <a class="active" href="#">2</a>
+                    <a class="active" href="#">1</a>
+                    <a href="#">2</a>
                     <a href="#">3</a>
                     <a href="#">4</a>
                     <a href="#">5</a>
@@ -151,7 +151,7 @@
                     <a href="#">&raquo;</a>
                 </div>
 
-            <div class="button">Read More</div>
+            <div class="button">Submit</div>
             </div>
             
         </section>

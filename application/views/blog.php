@@ -47,13 +47,14 @@
                 <h1>Career articles</h1>
             </div>
             <div class="underline-class"></div>
-            <div class="row" id="appendArticleContent" >
+            <div class="row mt-0" id="appendArticleContent" >
                 
             </div>
+
             <div class="fulfilling-bouncing-circle-spinner mx-auto">
                             <div class="circle"></div>
                             <div class="orbit"></div>
-                        </div>
+            </div>
             
     </section>
 </main>

@@ -2,12 +2,12 @@
 const base_url = "http://localhost/learnindia/";
 
 // host URl 
-const host_url = "http://localhost/learnindia/learnindia_API/v1/";
+const host_url = "http://localhost/learnindia_API/v1/";
 // Live 
 // const base_url = "https://leocan.co/subFolder/learnindia/";
 
 // Image URL 
-const image_url = "http://localhost/learnindia_adminpanel/learnindia_API/uploads/";
+const image_url = "http://localhost/learnindia_API/uploads/";
 
 $(document).ready(() => {
     $('.navbar-nav').on('click', 'li', function () {
@@ -41,7 +41,15 @@ $(document).ready(() => {
         setBlogContent();
         setInnerBlogContent();
         setCareerArticles();
-     
+        setServeyContent();
+    }
+    if (window.location.href == base_url + 'survey')  {
+        setServeyContent();
+    }
+    if (window.location.href == base_url + 'Term')  {
+        setTermContent();
+        setTermInnerContent();
+        setNewTermsCondition();
     }
 
 
@@ -289,6 +297,7 @@ function setInnerAboutContent() {
         },
     });
 }
+
 function setEducationLogo() {
     $.ajax({
         url: host_url + 'fetchEducationLogo',
@@ -407,13 +416,111 @@ function setCareerArticles() {
         success: function (data) {
             hideLoader();
             if (data.success) {
-                data.Response.map((currentArticle)=>{
-                    $("#appendArticleContent").append(`<div class="col-4 blog-box">
-                    <img src="${image_url}${currentArticle.image}" class="card-img-top" alt="blog-1">
-                    <div class="card-body">
-                        <h5 class="card-title">${currentArticle.heading}</h5>
-                        <p class="card-text">${currentArticle.content}</p>
-                    </div>
+                data.Response.map((currentArticle,index)=>{
+                    $("#appendArticleContent").append(`
+                    <div class="col-4 blog-box" style="margin-top: 100px">
+                        <img src="${image_url}${currentArticle.image}" class="card-img-top" alt="blog-1">
+                        <div class="card-body">
+                            <h5 class="card-title">${currentArticle.heading}</h5>
+                            <p class="card-text">${currentArticle.content}</p>
+                        </div>
+                    </div>`);
+                })
+            }
+        },
+    });
+}
+
+function setServeyContent() {
+    $.ajax({
+        url: host_url + 'fetchServeyContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                $("#setServeyContent").html(data.Response.content);
+            }
+        },
+    });
+}
+
+function setTermContent() {
+    $.ajax({
+        url: host_url + 'fetchTerms',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                $("#setTermsContent").html(data.Response.content);
+            }
+        },
+    });
+}
+
+function setTermInnerContent() {
+    $.ajax({
+        url: host_url + 'fetchTermsContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                $("#setTermsInner").html(data.Response.content);
+            }
+        },
+    });
+}
+
+function setNewTermsCondition() {
+    $.ajax({
+        url: host_url + 'fetchTerms_condition',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                data.Response.map((currentTerms,index)=>{
+                    $("#addNewTerms").append(`<div class="text-details">
+                    <h4>${index + 1}. ${currentTerms.heading}</h4>
+                    <p> ${currentTerms.content}</p>
                 </div>`);
                 })
             }
