@@ -40,6 +40,7 @@ $(document).ready(() => {
     if (window.location.href == base_url + 'blog')  {
         setBlogContent();
         setInnerBlogContent();
+        setCareerArticles();
      
     }
 
@@ -384,6 +385,38 @@ function setInnerBlogContent() {
             hideLoader();
             if (data.success) {
                 $("#blogInnerContent").html(data.Response.content);
+            }
+        },
+    });
+}
+
+function setCareerArticles() {
+    $.ajax({
+        url: host_url + 'fetchCareerArticles',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                data.Response.map((currentArticle)=>{
+                    console.log("currentArticle :",currentArticle);
+                    $("#appendArticleContent").append(`<div class="col-4 blog-box">
+                    <img src="${image_url}${currentArticle.image}" class="card-img-top" alt="blog-1">
+                    <div class="card-body">
+                        <h5 class="card-title">${currentArticle.heading}</h5>
+                        <p class="card-text">${currentArticle.content}</p>
+                    </div>
+                </div>`);
+                })
             }
         },
     });
