@@ -50,6 +50,10 @@
             <div class="row" id="appendArticleContent" >
                 
             </div>
+            <div class="fulfilling-bouncing-circle-spinner mx-auto">
+                            <div class="circle"></div>
+                            <div class="orbit"></div>
+                        </div>
             
     </section>
 </main>

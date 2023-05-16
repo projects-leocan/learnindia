@@ -408,7 +408,6 @@ function setCareerArticles() {
             hideLoader();
             if (data.success) {
                 data.Response.map((currentArticle)=>{
-                    console.log("currentArticle :",currentArticle);
                     $("#appendArticleContent").append(`<div class="col-4 blog-box">
                     <img src="${image_url}${currentArticle.image}" class="card-img-top" alt="blog-1">
                     <div class="card-body">
