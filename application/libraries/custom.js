@@ -31,25 +31,28 @@ $(document).ready(() => {
         setSucessContent();
     }
 
-    if (window.location.href == base_url + 'aboutUs')  {
+    if (window.location.href == base_url + 'aboutUs') {
         setAboutContent();
         setInnerAboutContent();
         setEducationLogo();
         setTeamMembers();
     }
-    if (window.location.href == base_url + 'blog')  {
+    if (window.location.href == base_url + 'blog') {
         setBlogContent();
         setInnerBlogContent();
         setCareerArticles();
         setServeyContent();
     }
-    if (window.location.href == base_url + 'survey')  {
+    if (window.location.href == base_url + 'survey') {
         setServeyContent();
     }
-    if (window.location.href == base_url + 'Term')  {
+    if (window.location.href == base_url + 'Term') {
         setTermContent();
         setTermInnerContent();
         setNewTermsCondition();
+    }
+    if (window.location.href == base_url + 'contactUs') {
+        setContactUSContent();
     }
 
 
@@ -149,8 +152,8 @@ function setGauidanceHelp() {
                     image2.src = this.src;
                 };
 
-            $("#appendImages").append(`<img id="careerHelpImg1" class="setLoader" decoding="async" src="${image_url}${data.Response.image}">`)
-            $("#appendImages").append(`<img id="careerHelpImg2" class="setLoader" decoding="async" src="${image_url}${data.Response.image2}">`)
+                $("#appendImages").append(`<img id="careerHelpImg1" class="setLoader" decoding="async" src="${image_url}${data.Response.image}">`)
+                $("#appendImages").append(`<img id="careerHelpImg2" class="setLoader" decoding="async" src="${image_url}${data.Response.image2}">`)
 
                 // // set the src attribute of the Image objects
                 img1.src = `${image_url}${data.Response.image}`;
@@ -232,7 +235,7 @@ function setSucessContent() {
         success: function (data) {
             hideLoader();
             if (data.success) {
-                data.Response.map((currentStory)=>{
+                data.Response.map((currentStory) => {
                     let storyContent = `
                     <div class="col-6 temonial-1">
                         <img src="img/right-quotation-mark.png" alt="right-quotation-mark">
@@ -315,7 +318,7 @@ function setEducationLogo() {
         success: function (data) {
             hideLoader();
             if (data.success) {
-                data.Response.map((logo)=>{
+                data.Response.map((logo) => {
                     $("#setEducationLogo").append(` <img src="${image_url}${logo.image}" alt="school">`);
                 })
             }
@@ -340,7 +343,7 @@ function setTeamMembers() {
         success: function (data) {
             hideLoader();
             if (data.success) {
-                data.Response.map((currentTeacher)=>{
+                data.Response.map((currentTeacher) => {
                     $("#appendTeamMembers").append(`
                     <div class="img-1">
                         <img src="${image_url}${currentTeacher.image}" alt="smith">
@@ -416,7 +419,7 @@ function setCareerArticles() {
         success: function (data) {
             hideLoader();
             if (data.success) {
-                data.Response.map((currentArticle,index)=>{
+                data.Response.map((currentArticle, index) => {
                     $("#appendArticleContent").append(`
                     <div class="col-4 blog-box" style="margin-top: 100px">
                         <img src="${image_url}${currentArticle.image}" class="card-img-top" alt="blog-1">
@@ -517,7 +520,7 @@ function setNewTermsCondition() {
         success: function (data) {
             hideLoader();
             if (data.success) {
-                data.Response.map((currentTerms,index)=>{
+                data.Response.map((currentTerms, index) => {
                     $("#addNewTerms").append(`<div class="text-details">
                     <h4>${index + 1}. ${currentTerms.heading}</h4>
                     <p> ${currentTerms.content}</p>
@@ -527,3 +530,79 @@ function setNewTermsCondition() {
         },
     });
 }
+
+function setContactUSContent() {
+    $.ajax({
+        url: host_url + 'fetchContact',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                $("#setContactUsContent").html(data.Response.content);
+                $("#setAddress").html(data.Response.address);
+                $("#setContactNo").append(data.Response.contact_num);
+                $("#setEmail").append(data.Response.email);
+            }
+        },
+    });
+}
+
+$("#submitContactForm").on("click", () => {
+
+    let username = $("#fname").val();
+    let email = $("#email").val();
+    let message = $("#message").val();
+
+    let data = new FormData();
+    data.append("user_name", username);
+    data.append("email", email);
+    data.append("meassge", message);
+
+    $.ajax({
+        url: host_url + 'fillContactForm',
+        data: data,
+        type: "POST",
+        cache: false,
+        processData: false,
+        contentType: false,
+        dataType: false,
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (e) {
+            showAlert("Failed to Data Add.");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.Status == "Success") {
+                Swal.fire({
+                    title: '',
+                    text: `Thank you for contacting us! We will get back to you shortly.`,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#F28123'
+                }).then((result) => {
+                    $("#fname").val("");
+                    $("#email").val("");
+                    $("#message").val("");
+                })
+            }
+            else {
+                Swal.fire(`${data.Message}`);
+            }
+        },
+    });
+})
