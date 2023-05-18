@@ -45,6 +45,7 @@ $(document).ready(() => {
     }
     if (window.location.href == base_url + 'survey') {
         setServeyContent();
+        setQuestionnaire();
     }
     if (window.location.href == base_url + 'Term') {
         setTermContent();
@@ -606,3 +607,158 @@ $("#submitContactForm").on("click", () => {
         },
     });
 })
+
+
+function setQuestionnaire() {
+    $.ajax({
+        url: host_url + 'fetchQuestionnaire',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.success) {
+                $("#setQuestion").html(data.Response.content);
+
+                data.Response.forEach((response, index) => {
+
+                    let options = response.options.split(", "); // Split the options by comma separator
+
+                    let optionsHtml = options.map((option) => {
+                        return `
+                <input type="radio" class="${option}" name="fav_language_${response.id}"  id="${response.id}" value="${option}">
+                <label for="${option}">${option}</label><br>`;
+                    }).join("");
+
+                    $("#setQuestion").append(`
+              <div class="survey-qna">
+                ${response.question}
+                ${optionsHtml}
+              </div>
+            `);
+                });
+            }
+        },
+    });
+}
+
+$("#submitCareerSurvey").on("click", () => {
+
+    let fname = $("#fname").val();
+    let email = $("#email").val();
+    let gender = $("#gender").val();
+    let lname = $("#lname").val();
+    let dob = $("#dob").val();
+    let grade = $("#grade").val();
+
+    let json_response = {};
+
+    $(".survey-qna").each(function (index) {
+        let question = $(this).find("p").text();
+        let selectedAnswer = $(this).find("input[type='radio']:checked").val();
+
+        // Add a key-value pair with a numbering prefix to the JSON object
+        json_response[`Question ${index + 1}`] = {
+            "Question": question,
+            "Answer": selectedAnswer
+        };
+    });
+
+    let json_string = JSON.stringify(json_response);
+
+    let data = new FormData();
+    data.append("first_name", fname);
+    data.append("last_name", lname);
+    data.append("email", email);
+    data.append("date_of_birth", dob);
+    data.append("gender", gender);
+    data.append("grade", grade);
+
+    $.ajax({
+        url: host_url + 'fillServeyForm',
+        data: data,
+        type: "POST",
+        cache: false,
+        processData: false,
+        contentType: false,
+        dataType: false,
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (e) {
+            showAlert("Failed to Data Add.");
+            hideLoader();
+        },
+        success: function (data) {
+            hideLoader();
+            if (data.Status == "Success") {
+                Swal.fire({
+                    title: '',
+                    text: `Thank you`,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#F28123'
+                }).then((result) => {
+
+                    let response = new FormData();
+                    response.append("answer",json_string );
+                    response.append("user_name", email);
+
+                    $.ajax({
+                        url: host_url + 'storeAnswers',
+                        data: response,
+                        type: "POST",
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        dataType: false,
+                        beforeSend: function (response) {
+                            showLoader();
+                        },
+                        complete: function (response) {
+                            hideLoader();
+                        },
+                        error: function (e) {
+                            showAlert("Failed to Data Add.");
+                            hideLoader();
+                        },
+                        success: function (response) {
+                            hideLoader();
+                            if (response.Status == "Success") {
+                                $("#fname").val();
+                                $("#email").val();
+                                $("#gender").val();
+                                $("#lname").val();
+                                $("#dob").val();
+                                $("#grade").val();
+                            }
+                            else {
+                                Swal.fire(`${response.Message}`);
+                            }
+                        },
+                    });
+                })
+            }
+            else {
+                Swal.fire(`${data.Message}`);
+            }
+        },
+    });
+
+
+
+});
+
+
+
+
