@@ -609,10 +609,25 @@ $("#submitContactForm").on("click", () => {
 })
 
 
-function setQuestionnaire() {
+let currentPage = 1; // Initialize current page number
+function setQuestionnaire(pageNumber, pageSize) {
+
+    console.log("pageNumber :", pageNumber);
+    console.log("pageSize :", pageSize);
+
+    let data = new FormData();
+    data.append('page_num', pageNumber);
+    data.append('page_size', pageSize)
+
+
     $.ajax({
         url: host_url + 'fetchQuestionnaire',
-        method: 'get',
+        type: "POST",
+        data: data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        dataType: false,
         beforeSend: function (data) {
             showLoader();
         },
@@ -626,6 +641,8 @@ function setQuestionnaire() {
         success: function (data) {
             hideLoader();
             if (data.success) {
+                localStorage.setItem("totalQuestions", data.totalQuestions);
+                $("#setQuestion").empty();   // Clear the previous content
                 $("#setQuestion").html(data.Response.content);
 
                 data.Response.forEach((response, index) => {
@@ -634,21 +651,79 @@ function setQuestionnaire() {
 
                     let optionsHtml = options.map((option) => {
                         return `
-                <input type="radio" class="${option}" name="fav_language_${response.id}"  id="${response.id}" value="${option}">
-                <label for="${option}">${option}</label><br>`;
+                            <input type="radio" class="${option}" name="fav_language_${response.id}"  id="${response.id}" value="${option}">
+                            <label for="${option}">${option}</label><br>`;
                     }).join("");
 
                     $("#setQuestion").append(`
-              <div class="survey-qna">
-                ${response.question}
-                ${optionsHtml}
-              </div>
-            `);
+                          <div class="survey-qna">
+                            ${response.question}
+                            ${optionsHtml}
+                          </div>
+                        `);
                 });
             }
         },
     });
+
+    // Update the current page number
+    currentPage = pageNumber;
 }
+
+
+function generatePaginationLinks(totalPages, currentPage) {
+    let paginationContainer = $(".pagination");
+    paginationContainer.empty();
+
+    let previousButton = $('<button id="previousPage" disabled>&laquo;</button>');
+    let nextButton = $('<button id="nextPage" disabled>&raquo;</button>');
+
+    // Add previous page button
+    if (currentPage > 1) {
+        paginationContainer.append(previousButton.clone().removeAttr("disabled"));
+    } else {
+        paginationContainer.append(previousButton);
+    }
+
+    // Add page buttons
+    for (let i = 1; i <= totalPages; i++) {
+        let activeClass = (i === currentPage) ? "active" : "";
+        let pageButton = $(`<button class="${activeClass}" data-page="${i}">${i}</button>`);
+        paginationContainer.append(pageButton);
+    }
+
+    // Add next page button
+    if (currentPage < totalPages) {
+        paginationContainer.append(nextButton.clone().removeAttr("disabled"));
+    } else {
+        paginationContainer.append(nextButton);
+    }
+
+    // Attach click event to page buttons
+    paginationContainer.find("button").on("click", function () {
+        let page = $(this).data("page");
+
+        if ($(this).attr("id") === "previousPage") {
+            currentPage = Math.max(currentPage - 1, 1);
+        } else if ($(this).attr("id") === "nextPage") {
+            currentPage = Math.min(currentPage + 1, totalPages);
+        } else {
+            currentPage = page;
+        }
+
+        setQuestionnaire(currentPage, 5); // Fetch questions for the clicked page
+        generatePaginationLinks(totalPages, currentPage); // Update the pagination buttons
+    });
+}
+
+// Calculate the total number of pages based on the number of questions and the page size
+let totalQuestions = localStorage.getItem("totalQuestions");
+let pageSize = 5;
+let totalPages = Math.ceil(totalQuestions / pageSize);
+
+generatePaginationLinks(totalPages, currentPage);
+setQuestionnaire(currentPage, pageSize); // Fetch questions for the initial page
+
 
 $("#submitCareerSurvey").on("click", () => {
 
@@ -711,7 +786,7 @@ $("#submitCareerSurvey").on("click", () => {
                 }).then((result) => {
 
                     let response = new FormData();
-                    response.append("answer",json_string );
+                    response.append("answer", json_string);
                     response.append("user_name", email);
 
                     $.ajax({
