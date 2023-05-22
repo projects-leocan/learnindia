@@ -71,16 +71,6 @@
             </div>
 
 
-            <!-- <div class="survey-qna-2">
-                    <li>Lorem Ipsum is simply dummy text of the printing and typesetting industry</li>
-                    <input type="radio" class="Yes" name="fav_language" value="HTML">
-                    <label for="html">Red</label><br>
-                    <input type="radio" class="" name="fav_language" value="CSS">
-                    <label for="css">Yellow</label><br>
-                    <input type="radio" class="" name="fav_language" value="CSS">
-                    <label for="css">Blue</label>
-                </div> -->
-
             <div class="pagination">
                 <button id="previousPage">&laquo;</button>
                 <!-- Generate page buttons dynamically -->
@@ -92,7 +82,7 @@
             
 
 
-            <div class="button" id="submitCareerSurvey">Submit</div>
+            <div class="button" id="submitCareerSurvey" style="display: none;">Submit</div>
         </div>
 
     </section>

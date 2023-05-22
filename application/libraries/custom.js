@@ -594,7 +594,7 @@ $("#submitContactForm").on("click", () => {
                     title: '',
                     text: `Thank you for contacting us! We will get back to you shortly.`,
                     confirmButtonText: 'Ok',
-                    confirmButtonColor: '#F28123'
+                    confirmButtonColor: '#046A38'
                 }).then((result) => {
                     $("#fname").val("");
                     $("#email").val("");
@@ -612,8 +612,6 @@ $("#submitContactForm").on("click", () => {
 let currentPage = 1; // Initialize current page number
 function setQuestionnaire(pageNumber, pageSize) {
 
-    console.log("pageNumber :", pageNumber);
-    console.log("pageSize :", pageSize);
 
     let data = new FormData();
     data.append('page_num', pageNumber);
@@ -642,6 +640,7 @@ function setQuestionnaire(pageNumber, pageSize) {
             hideLoader();
             if (data.success) {
                 localStorage.setItem("totalQuestions", data.totalQuestions);
+
                 $("#setQuestion").empty();   // Clear the previous content
                 $("#setQuestion").html(data.Response.content);
 
@@ -651,12 +650,12 @@ function setQuestionnaire(pageNumber, pageSize) {
 
                     let optionsHtml = options.map((option) => {
                         return `
-                            <input type="radio" class="${option}" name="fav_language_${response.id}"  id="${response.id}" value="${option}">
+                            <input type="radio" class="selectOption" name="fav_language_${response.id}"  option_id="${response.id}" value="${option}">
                             <label for="${option}">${option}</label><br>`;
                     }).join("");
 
                     $("#setQuestion").append(`
-                          <div class="survey-qna">
+                          <div class="survey-qna" question_id="${response.id}">
                             ${response.question}
                             ${optionsHtml}
                           </div>
@@ -669,7 +668,6 @@ function setQuestionnaire(pageNumber, pageSize) {
     // Update the current page number
     currentPage = pageNumber;
 }
-
 
 function generatePaginationLinks(totalPages, currentPage) {
     let paginationContainer = $(".pagination");
@@ -698,6 +696,12 @@ function generatePaginationLinks(totalPages, currentPage) {
     } else {
         paginationContainer.append(nextButton);
     }
+    // Show/hide submit button based on current page
+    if (currentPage === totalPages) {
+        $("#submitCareerSurvey").show();
+    } else {
+        $("#submitCareerSurvey").hide();
+    }
 
     // Attach click event to page buttons
     paginationContainer.find("button").on("click", function () {
@@ -725,29 +729,87 @@ generatePaginationLinks(totalPages, currentPage);
 setQuestionnaire(currentPage, pageSize); // Fetch questions for the initial page
 
 
-$("#submitCareerSurvey").on("click", () => {
+let json_response = {};
 
-    let fname = $("#fname").val();
+$(document).on("click", ".selectOption", function(e) {
+
     let email = $("#email").val();
-    let gender = $("#gender").val();
-    let lname = $("#lname").val();
-    let dob = $("#dob").val();
-    let grade = $("#grade").val();
+    let questionId = $(this).closest(".survey-qna").attr("question_id");
+    let optionId = $(this).attr("option_id");
+    let selectedAnswer = $(this).val();
 
-    let json_response = {};
-
-    $(".survey-qna").each(function (index) {
-        let question = $(this).find("p").text();
-        let selectedAnswer = $(this).find("input[type='radio']:checked").val();
-
-        // Add a key-value pair with a numbering prefix to the JSON object
-        json_response[`Question ${index + 1}`] = {
-            "Question": question,
-            "Answer": selectedAnswer
+    // Check if the question exists in the JSON object
+    if (!json_response.hasOwnProperty(questionId)) {
+        json_response[questionId] = {
+            "question_id": questionId,
+            "answers": []
         };
+    }
+
+    // Add the selected answer to the question's answers array
+    json_response[questionId].answers.push({
+        "option_id": optionId,
+        "answer": selectedAnswer,
+        "user_name": email
     });
 
     let json_string = JSON.stringify(json_response);
+    localStorage.setItem("json_string", json_string);
+});
+
+  
+
+$("#submitCareerSurvey").on("click", () => {
+
+    // Perform client-side validation
+    let errors = [];
+
+    let fname = $("#fname").val();
+    if (fname.trim() === "") {
+        errors.push("First name is required.");
+    }
+
+    let email = $("#email").val();
+    if (email.trim() === "") {
+        errors.push("Email is required.");
+    } else if (!isValidEmail(email)) {
+        errors.push("Invalid email address.");
+    }
+
+    let gender = $("#gender").val();
+    if (gender.trim() === "") {
+        errors.push("Gender is required.");
+    }
+
+    let lname = $("#lname").val();
+    if (lname.trim() === "") {
+        errors.push("Last name is required.");
+    }
+
+    let dob = $("#dob").val();
+    if (dob.trim() === "") {
+        errors.push("Date of birth is required.");
+    } else if (!isValidDate(dob)) {
+        errors.push("Invalid date of birth. Please use the format: YYYY-MM-DD.");
+    }
+
+    let grade = $("#grade").val();
+    if (grade.trim() === "") {
+        errors.push("Grade is required.");
+    }
+
+    // Check if any validation errors occurred
+    if (errors.length > 0) {
+        let errorMessage = "Please correct the following issues:\n" + errors.join("\n");
+        Swal.fire({
+            title: `${errorMessage}`,
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#046A38'
+        })
+        return;
+    }
+
+    // Proceed with form submission if validation passes
 
     let data = new FormData();
     data.append("first_name", fname);
@@ -757,6 +819,7 @@ $("#submitCareerSurvey").on("click", () => {
     data.append("gender", gender);
     data.append("grade", grade);
 
+    // Send the AJAX request for form submission
     $.ajax({
         url: host_url + 'fillServeyForm',
         data: data,
@@ -765,14 +828,14 @@ $("#submitCareerSurvey").on("click", () => {
         processData: false,
         contentType: false,
         dataType: false,
-        beforeSend: function (data) {
+        beforeSend: function () {
             showLoader();
         },
-        complete: function (data) {
+        complete: function () {
             hideLoader();
         },
-        error: function (e) {
-            showAlert("Failed to Data Add.");
+        error: function () {
+            showAlert("Failed to add data.");
             hideLoader();
         },
         success: function (data) {
@@ -780,14 +843,14 @@ $("#submitCareerSurvey").on("click", () => {
             if (data.Status == "Success") {
                 Swal.fire({
                     title: '',
-                    text: `Thank you`,
+                    text: "Thank you",
                     confirmButtonText: 'Ok',
-                    confirmButtonColor: '#F28123'
+                    confirmButtonColor: '#046A38'
                 }).then((result) => {
 
                     let response = new FormData();
+                    let json_string = localStorage.getItem("json_string");
                     response.append("answer", json_string);
-                    response.append("user_name", email);
 
                     $.ajax({
                         url: host_url + 'storeAnswers',
@@ -797,42 +860,56 @@ $("#submitCareerSurvey").on("click", () => {
                         processData: false,
                         contentType: false,
                         dataType: false,
-                        beforeSend: function (response) {
+                        beforeSend: function () {
                             showLoader();
                         },
-                        complete: function (response) {
+                        complete: function () {
                             hideLoader();
                         },
-                        error: function (e) {
-                            showAlert("Failed to Data Add.");
+                        error: function () {
+                            showAlert("Failed to add data.");
                             hideLoader();
                         },
                         success: function (response) {
                             hideLoader();
                             if (response.Status == "Success") {
-                                $("#fname").val();
-                                $("#email").val();
-                                $("#gender").val();
-                                $("#lname").val();
-                                $("#dob").val();
-                                $("#grade").val();
-                            }
-                            else {
-                                Swal.fire(`${response.Message}`);
+                                // Clear the form fields upon successful submission
+                                $("#fname").val("");
+                                $("#email").val("");
+                                $("#gender").val("");
+                                $("#lname").val("");
+                                $("#dob").val("");
+                                $("#grade").val("");
+                                localStorage.removeItem("json_string");
+                            } else {
+                                Swal.fire(response.Message);
                             }
                         },
                     });
                 })
-            }
-            else {
-                Swal.fire(`${data.Message}`);
+            } else {
+                Swal.fire(data.Message);
             }
         },
     });
-
-
-
 });
+
+// Function to validate email using a regular expression
+function isValidEmail(email) {
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+}
+
+// Function to validate date format
+function isValidDate(date) {
+    let datePattern = /^\d{4}-\d{2}-\d{2}$/;
+    return datePattern.test(date);
+}
+
+
+
+
+
 
 
 
