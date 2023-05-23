@@ -818,8 +818,34 @@ setQuestionnaire(currentPage, pageSize); // Fetch questions for the initial page
 
 let json_response = {};
 
-$(document).on("click", ".selectOption", function (e) {
+// $(document).on("click", ".selectOption", function (e) {
 
+//     let email = $("#email").val();
+//     let questionId = $(this).closest(".survey-qna").attr("question_id");
+//     let optionId = $(this).attr("option_id");
+//     let selectedAnswer = $(this).val();
+
+//     // Check if the question exists in the JSON object
+//     if (!json_response.hasOwnProperty(questionId)) {
+//         json_response[questionId] = {
+//             "question_id": questionId,
+//             "answers": []
+//         };
+//     }
+
+//     // Add the selected answer to the question's answers array
+//     json_response[questionId].answers.push({
+//         "option_id": optionId,
+//         "answer": selectedAnswer,
+//         "user_name": email
+//     });
+
+//     let json_string = JSON.stringify(json_response);
+//     localStorage.setItem("json_string", json_string);
+// });
+
+
+$(document).on("click", ".selectOption", function (e) {
     let email = $("#email").val();
     let questionId = $(this).closest(".survey-qna").attr("question_id");
     let optionId = $(this).attr("option_id");
@@ -832,6 +858,9 @@ $(document).on("click", ".selectOption", function (e) {
             "answers": []
         };
     }
+
+    // Remove any previous answer for the same question and option
+    json_response[questionId].answers = json_response[questionId].answers.filter(answer => answer.option_id !== optionId);
 
     // Add the selected answer to the question's answers array
     json_response[questionId].answers.push({
