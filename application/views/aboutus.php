@@ -1,3 +1,8 @@
+<style>
+.setLoader {
+    background: url(img/loading.gif) 50% no-repeat;
+}
+</style>
 <!-- HEADER -->
 <main>
     <section class="about-us">
@@ -67,28 +72,12 @@
             </div>
             <div class="underline-class"></div>
             <div class="img-2" id="appendTeamMembers">
-
                 <div class="fulfilling-bouncing-circle-spinner mx-auto">
                     <div class="circle"></div>
                     <div class="orbit"></div>
                 </div>
-                <!-- <div class="img-1">
-                    <img src="img/smith (1).jpg" alt="smith">
-                    <span>LORA SMITH</span>
-                </div> -->
-                <!-- <div class="img-1">
-                    <img src="img/smith (2).jpg" alt="smith">
-                    <span>LORA SMITH</span>
-                </div>
-                <div class="img-1">
-                    <img src="img/smith (3).jpg" alt="smith">
-                    <span>LORA SMITH</span>
-                </div>
-                <div class="img-1">
-                    <img src="img/smith (4).jpg" alt="smith">
-                    <span>LORA SMITH</span>
-                </div> -->
             </div>
         </div>
     </section>
+
 </main>

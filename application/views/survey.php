@@ -82,7 +82,7 @@
             
 
 
-            <div class="button" id="submitCareerSurvey" style="display: none;">Submit</div>
+            <div class="button" id="submitCareerSurvey" style="display: none;cursor:pointer;">Submit</div>
         </div>
 
     </section>

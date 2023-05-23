@@ -26,26 +26,26 @@
                         <div class="col-2">
                             <ul>
                                 <li>
-                                    <a href="#">Home</a>
+                                    <a href="#" class="goHome">Home</a>
                                 </li>
                                 <li>
-                                    <a href="#">About us</a>
+                                    <a href="#" class="goAbout">About us</a>
                                 </li>
                                 <li>
-                                    <a href="#">Blog</a>
+                                    <a href="#" class="goBlog">Blog</a>
                                 </li>
                             </ul>
                         </div>
                         <div class="col-2">
                             <ul>
                                 <li>
-                                    <a href="#">Home</a>
+                                    <a href="#" class="goHome">Home</a>
                                 </li>
                                 <li>
-                                    <a href="#">About us</a>
+                                    <a href="#" class="goAbout">About us</a>
                                 </li>
                                 <li>
-                                    <a href="#">Blog</a>
+                                    <a href="#" class="goBlog">Blog</a>
                                 </li>
                             </ul>
                         </div>
@@ -54,10 +54,9 @@
                 <div class="col-4 contact">
                     <h4>Contact</h4>
                     <div>
-                        <p><i class="fa-sharp fa-solid fa-phone"></i>979-988-89787</p>
-                        <p><i class="fa-solid fa-envelope"></i>abcd123@gmail.com</p>
-                        <p><i class="fa-solid fa-location-dot" style="margin-left: 3px;"></i>2972 Westheimer Rd. Santa
-                            Ana, Illinois 85486</p>
+                        <p id="cntNo"><i class="fa-sharp fa-solid fa-phone"></i></p>
+                        <p id="contactEmail"><i class="fa-solid fa-envelope"></i></p>
+                        <p id="contactAddress"><i class="fa-solid fa-location-dot" style="margin-left: 3px;"></i></p>
                     </div>
                 </div>
             </div>

@@ -53,9 +53,10 @@ $(document).ready(() => {
         setNewTermsCondition();
     }
     if (window.location.href == base_url + 'contactUs') {
-        setContactUSContent();
+        // setContactUSContent();
     }
 
+    setContactUSContent();
 
 })
 
@@ -89,7 +90,15 @@ $("#contactPage").on("click", function (event) {
 });
 
 // footer Redirection
-
+$(".goHome").on("click", function (event) {
+    window.location = 'home';
+});
+$(".goAbout").on("click", function (event) {
+    window.location = 'aboutUs';
+});
+$(".goBlog").on("click", function (event) {
+    window.location = 'blog';
+});
 
 // Key to success page content 
 function setKeyToSuccess() {
@@ -330,31 +339,56 @@ function setEducationLogo() {
 function setTeamMembers() {
     $.ajax({
         url: host_url + 'fetchTeamMember',
-        method: 'get',
-        beforeSend: function (data) {
+        method: 'GET',
+        beforeSend:function(data){
             showLoader();
-        },
-        complete: function (data) {
-            hideLoader();
         },
         error: function (data) {
             alert("Something went wrong");
             hideLoader();
         },
         success: function (data) {
-            hideLoader();
             if (data.success) {
-                data.Response.map((currentTeacher) => {
-                    $("#appendTeamMembers").append(`
-                    <div class="img-1">
-                        <img src="${image_url}${currentTeacher.image}" alt="smith">
+                let teamMembers = data.Response;
+
+                // Create a fragment to hold the appended HTML
+                let fragment = document.createDocumentFragment();
+
+                // Counter to keep track of loaded images
+                let loadedImages = 0;
+
+                // Iterate over the team members and append the HTML
+                teamMembers.forEach(function (currentTeacher) {
+                    let div = document.createElement('div');
+                    div.classList.add('img-1');
+                    div.innerHTML = `
+                        <img class="setLoader" src="${image_url}${currentTeacher.image}" alt="${currentTeacher.teacher_name} image">
                         <span>${currentTeacher.teacher_name}</span>
-                    </div>`);
-                })
+                    `;
+
+                    // Add a load event listener to each image
+                    div.querySelector('.setLoader').addEventListener('load', function () {
+                        loadedImages++;
+
+                        // Check if all images have loaded
+                        if (loadedImages === teamMembers.length) {
+                            hideLoader();
+                        }
+                    });
+
+                    fragment.appendChild(div);
+                });
+
+                // Append the fragment to the DOM
+                $("#appendTeamMembers").append(fragment);
             }
         },
+        complete: function (data) {
+            hideLoader();
+        }
     });
 }
+
 
 // BLOG SECTION
 function setBlogContent() {
@@ -553,22 +587,54 @@ function setContactUSContent() {
                 $("#setAddress").html(data.Response.address);
                 $("#setContactNo").append(data.Response.contact_num);
                 $("#setEmail").append(data.Response.email);
+
+                // footer
+                $("#cntNo").append(data.Response.contact_num);
+                $("#contactEmail").append(data.Response.email);
+                $("#contactAddress").append(data.Response.address);
+                
             }
         },
     });
 }
 
-$("#submitContactForm").on("click", () => {
 
+$("#submitContactForm").on("click", () => {
     let username = $("#fname").val();
     let email = $("#email").val();
     let message = $("#message").val();
 
+    // Validate the input fields
+    if (!username || !email || !message) {
+        Swal.fire({
+            title: 'Error',
+            text: 'Please fill in all fields.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#046A38'
+        });
+        return;
+    }
+
+    // Validate the email format
+    if (!isValidEmail(email)) {
+        Swal.fire({
+            title: 'Error',
+            text: 'Please enter a valid email address.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#046A38'
+        });
+        return;
+    }
+
+    // Create a FormData object and append the form data
     let data = new FormData();
     data.append("user_name", username);
     data.append("email", email);
     data.append("meassge", message);
 
+    // Send the form data using AJAX
     $.ajax({
         url: host_url + 'fillContactForm',
         data: data,
@@ -584,29 +650,50 @@ $("#submitContactForm").on("click", () => {
             hideLoader();
         },
         error: function (e) {
-            showAlert("Failed to Data Add.");
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to submit the form. Please try again later.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#046A38'
+            });
             hideLoader();
         },
         success: function (data) {
             hideLoader();
             if (data.Status == "Success") {
                 Swal.fire({
-                    title: '',
-                    text: `Thank you for contacting us! We will get back to you shortly.`,
-                    confirmButtonText: 'Ok',
+                    title: 'Success',
+                    text: 'Thank you for contacting us! We will get back to you shortly.',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
                     confirmButtonColor: '#046A38'
                 }).then((result) => {
+                    // Clear the form fields
                     $("#fname").val("");
                     $("#email").val("");
                     $("#message").val("");
                 })
-            }
-            else {
-                Swal.fire(`${data.Message}`);
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to submit the form. Please try again later.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#046A38'
+                });
             }
         },
     });
-})
+});
+
+// Function to validate email format
+function isValidEmail(email) {
+    // Regular expression to validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
 
 
 let currentPage = 1; // Initialize current page number
@@ -731,7 +818,7 @@ setQuestionnaire(currentPage, pageSize); // Fetch questions for the initial page
 
 let json_response = {};
 
-$(document).on("click", ".selectOption", function(e) {
+$(document).on("click", ".selectOption", function (e) {
 
     let email = $("#email").val();
     let questionId = $(this).closest(".survey-qna").attr("question_id");
@@ -757,7 +844,6 @@ $(document).on("click", ".selectOption", function(e) {
     localStorage.setItem("json_string", json_string);
 });
 
-  
 
 $("#submitCareerSurvey").on("click", () => {
 
@@ -835,15 +921,16 @@ $("#submitCareerSurvey").on("click", () => {
             hideLoader();
         },
         error: function () {
-            showAlert("Failed to add data.");
+            Swal.fire("Failed to submit the form.");
             hideLoader();
         },
         success: function (data) {
             hideLoader();
             if (data.Status == "Success") {
                 Swal.fire({
-                    title: '',
-                    text: "Thank you",
+                    title: 'Success',
+                    text: "Thank you for submitting the career survey form!",
+                    icon: 'success',
                     confirmButtonText: 'Ok',
                     confirmButtonColor: '#046A38'
                 }).then((result) => {
@@ -881,6 +968,10 @@ $("#submitCareerSurvey").on("click", () => {
                                 $("#dob").val("");
                                 $("#grade").val("");
                                 localStorage.removeItem("json_string");
+                                
+                                // Uncheck all radio buttons in the survey question options
+                                $(".survey-qna input[type='radio']").prop("checked", false);
+                                
                             } else {
                                 Swal.fire(response.Message);
                             }
