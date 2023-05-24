@@ -1,14 +1,15 @@
 // Local
+const base_url = "https://leocan.co/subFolder/learnIndiaWeb/web/";
 // const base_url = "http://localhost/learnindia/";
-const base_url = "https://leocan.co/subFolder/learnIndiaWeb/";
 
 // host URl 
-const host_url = "http://localhost/learnindia_API/v1/";
 // Live 
-// const base_url = "https://leocan.co/subFolder/learnindia/";
+const host_url = "https://leocan.co/subFolder/learnIndiaWeb/API/v1/";
+// const host_url = "http://localhost/learnindia_API/v1/";
 
 // Image URL 
-const image_url = "http://localhost/learnindia_API/uploads/";
+const image_url = "https://leocan.co/subFolder/learnIndiaWeb/API/uploads/";
+// const image_url = "http://localhost/learnindia_API/uploads/";
 
 $(document).ready(() => {
     $('.navbar-nav').on('click', 'li', function () {
