@@ -1,5 +1,6 @@
 // Local
-const base_url = "http://localhost/learnindia/";
+// const base_url = "http://localhost/learnindia/";
+const base_url = "https://leocan.co/subFolder/learnIndiaWeb/";
 
 // host URl 
 const host_url = "http://localhost/learnindia_API/v1/";
