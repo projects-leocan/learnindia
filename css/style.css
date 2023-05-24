@@ -1376,10 +1376,10 @@ body {
         margin-bottom: 100px;
     }
 
-    .contact-details h1,
+    /* .contact-details h1,
     p {
         text-align: center;
-    }
+    } */
 
     .contact-details .button {
         margin-left: auto;
