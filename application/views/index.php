@@ -7,7 +7,7 @@
 <main>
     <section>
         <div class="slider">
-            <img src="img/slider.jpg" decoding="async" class="d-block w-100" alt="slider">
+            <img src="img/slider.jpg"   loading="eager"  class="d-block w-100" alt="slider">
             <div class="overlay"></div>
             <div class="caption container">
                 <h1>Key To Success</h1>
@@ -17,7 +17,7 @@
                     <div class="orbit"></div>
                 </div>
                 </p>
-                <div class="button" id="GOContact" style="cursor: pointer;">
+                <div class="button GOContact">
                     Contact us
                 </div>
             </div>
@@ -26,7 +26,7 @@
 
     <section>
         <div class="help">
-            <img src="img/help.jpg" decoding="async" class="d-block w-100" alt="slider">
+            <img src="img/help.jpg" loading="eager" class="d-block w-100" alt="slider">
             <div class="overlay-2"></div>
             <div class="details container">
                 <div class="title">
@@ -51,7 +51,7 @@
                     </div>
 
                 </div>
-                <div class="button-2">
+                <div class="button-2 GOContact">
                     Contact us
                 </div>
             </div>
@@ -60,7 +60,7 @@
 
     <section>
         <div class="explore">
-            <img src="img/kids.jpg"  decoding="async" class="d-block w-100" alt="slider">
+            <img src="img/kids.jpg" loading="eager" class="d-block w-100" alt="slider">
             <div class="overlay-2"></div>
             <div class="details container">
                 <div class="title">
@@ -85,7 +85,7 @@
 
     <section>
         <div class="seling">
-            <img src="img/kids.jpg" decoding="async" class="d-block w-100" alt="slider">
+            <img src="img/kids.jpg" loading="eager" class="d-block w-100" alt="slider">
             <div class="overlay-2"></div>
             <div class="details container">
                 <div class="title">

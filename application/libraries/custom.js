@@ -93,7 +93,7 @@ $("#TermPage").on("click", function (event) {
 $("#contactPage").on("click", function (event) {
     window.location = 'contactUs';
 });
-$("#GOContact").on("click", function (event) {
+$(".GOContact").on("click", function (event) {
     window.location = 'contactUs';
 });
 

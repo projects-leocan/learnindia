@@ -2,7 +2,7 @@
 <main>
     <section>
         <div class="slider">
-            <img src="img/survey (1).jpg" class="d-block w-100" alt="slider">
+            <img src="img/survey (1).jpg" loading="eager" class="d-block w-100" alt="slider">
             <div class="overlay"></div>
             <div class="caption container">
                 <h1>Survey</h1>
@@ -18,7 +18,7 @@
 
     <section class="survey">
         <div class="seling">
-            <img src="img/survey (2).jpg" class="d-block w-100" alt="slider">
+            <img src="img/survey (2).jpg" loading="eager" class="d-block w-100" alt="slider">
             <div class="overlay-2"></div>
             <div class="details container">
                 <div class="title">

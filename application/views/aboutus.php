@@ -7,7 +7,7 @@
 <main>
     <section class="about-us">
         <div class="slider">
-            <img src="img/about us.jpg" class="d-block w-100" alt="slider">
+            <img src="img/about us.jpg" loading="eager" class="d-block w-100" alt="slider">
             <div class="overlay"></div>
             <div class="caption container">
                 <h1>About Us</h1>
@@ -23,7 +23,7 @@
 
     <section class="about">
         <div class="seling">
-            <img src="img/lorem.jpg" class="d-block w-100" alt="slider">
+            <img src="img/lorem.jpg" loading="eager" class="d-block w-100" alt="slider">
             <div class="overlay-2"></div>
             <div class="details container">
                 <div class="title">
