@@ -867,10 +867,18 @@ body {
     margin-top: 50px;
 }
 
+/* .img-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+
 .img-1 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 25%; /* Display four teachers per line */
+    padding: 0 10px;
 }
 
 .img-1 img {
@@ -887,10 +895,19 @@ body {
 
 .img-2 {
     display: flex;
+    flex-wrap: wrap; /* Allow teachers to wrap to the next line */
+    /* justify-content: space-between; */
+    margin-top: 100px;
+    width: 100%;
+}
+
+
+/* .img-2 {
+    display: flex;
     margin-top: 100px;
     width: 100%;
     justify-content: space-between;
-}
+} */
 
 @media (max-width:1024px) {
     .img-1 img {
@@ -952,6 +969,7 @@ body {
 
     .img-1 {
         margin-bottom: 20px;
+        width: 100%;
     }
 
     .img-1 img {

@@ -75,6 +75,9 @@ function hideLoader() {
 $("#homePage").on("click", function (event) {
     window.location = 'home';
 });
+$("#GoHOME").on("click", function (event) {
+    window.location = 'home';
+});
 $("#aboutUsPage").on("click", function (event) {
     window.location = 'aboutUs';
 });
@@ -695,8 +698,6 @@ function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
-
-
 
 let currentPage = 1; // Initialize current page number
 function setQuestionnaire(pageNumber, pageSize) {

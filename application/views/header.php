@@ -31,7 +31,7 @@
             <div class="conatiner">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <div class="container">
-                        <a class="navbar-brand" href="#">
+                        <a class="navbar-brand" href="#" id="GoHOME">
                             <img src="img/Logo (1).jpeg" alt="logo">
                         </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
