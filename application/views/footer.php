@@ -39,13 +39,13 @@
                         <div class="col-2">
                             <ul>
                                 <li>
-                                    <a href="#" class="goHome">Home</a>
+                                    <a href="#" class="goSurvey">Survey</a>
                                 </li>
                                 <li>
-                                    <a href="#" class="goAbout">About us</a>
+                                    <a href="#" class="goTC">T & C</a>
                                 </li>
                                 <li>
-                                    <a href="#" class="goBlog">Blog</a>
+                                    <a href="#" class="goCS">Contact Us</a>
                                 </li>
                             </ul>
                         </div>

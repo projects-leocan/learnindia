@@ -93,6 +93,9 @@ $("#TermPage").on("click", function (event) {
 $("#contactPage").on("click", function (event) {
     window.location = 'contactUs';
 });
+$("#GOContact").on("click", function (event) {
+    window.location = 'contactUs';
+});
 
 // footer Redirection
 $(".goHome").on("click", function (event) {
@@ -103,6 +106,15 @@ $(".goAbout").on("click", function (event) {
 });
 $(".goBlog").on("click", function (event) {
     window.location = 'blog';
+});
+$(".goSurvey").on("click", function (event) {
+    window.location = 'survey';
+});
+$(".goTC").on("click", function (event) {
+    window.location = 'Term';
+});
+$(".goCS").on("click", function (event) {
+    window.location = 'contactUs';
 });
 
 // Key to success page content 

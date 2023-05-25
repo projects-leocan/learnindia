@@ -17,7 +17,7 @@
                     <div class="orbit"></div>
                 </div>
                 </p>
-                <div class="button">
+                <div class="button" id="GOContact" style="cursor: pointer;">
                     Contact us
                 </div>
             </div>
