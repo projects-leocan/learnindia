@@ -12,25 +12,13 @@ const image_url = "https://leocan.co/subFolder/learnIndiaWeb/API/uploads/";
 // const image_url = "http://localhost/learnindia_API/uploads/";
 
 $(document).ready(() => {
-    $('.navbar-nav').on('click', 'li', function () {
-        $('.navbar-nav li').removeClass('active');
-        $(this).addClass('active');
-    });
 
-    if (window.location.href == base_url) {
-        setKeyToSuccess();
-        setGauidanceHelp();
-        setJourneyContent();
-        setCounsellingContent();
-        setSucessContent();
+    if (window.location.href == base_url ) {
+        fetchCombinedContent();
     }
 
     if (window.location.href == base_url + 'home') {
-        setKeyToSuccess();
-        setGauidanceHelp();
-        setJourneyContent();
-        setCounsellingContent();
-        setSucessContent();
+        fetchCombinedContent();
     }
 
     if (window.location.href == base_url + 'aboutUs') {
@@ -117,10 +105,12 @@ $(".goCS").on("click", function (event) {
     window.location = 'contactUs';
 });
 
-// Key to success page content 
-function setKeyToSuccess() {
+
+// fetchCombinedContent
+
+function fetchCombinedContent() {
     $.ajax({
-        url: host_url + 'fetchKeyToSuccess',
+        url: host_url + 'fetchCombinedContent',
         method: 'get',
         beforeSend: function (data) {
             showLoader();
@@ -133,136 +123,18 @@ function setKeyToSuccess() {
             hideLoader();
         },
         success: function (data) {
-            hideLoader();
             if (data.success) {
-                $("#keyToSuccessContent").html(data.Response.content);
-            }
-        },
-    });
-}
+                $("#keyToSuccessContent").html(data.Response.home[0].content);
+                $("#careerHelpContent").html(data.Response.career_guidance[0].content);
+                $("#appendImages").append(`<img id="careerHelpImg1" loading="eager" class="setLoader" src="${image_url}${data.Response.career_guidance[0].image}">`)
+                $("#appendImages").append(`<img id="careerHelpImg2" loading="eager" class="setLoader" src="${image_url}${data.Response.career_guidance[0].image2}">`)
+                $("#careerJourneyContent").html(data.Response.career_journey[0].content);
 
-// How career guidance can help you?
-function setGauidanceHelp() {
-    var image = document.images[3];
-    var image2 = document.images[4];
+                $("#counsellingHeading").html(data.Response.counseling[0].heading);
+                $("#counsellingContent").html(data.Response.counseling[0].content);
+                
 
-    $.ajax({
-        url: host_url + 'fetchGuidenceContent',
-        method: 'get',
-        beforeSend: function () {
-            showLoader();
-        },
-        complete: function () {
-            // showLoader();
-            hideLoader();
-        },
-        error: function () {
-            alert("Something went wrong");
-            hideLoader();
-            // showLoader();
-        },
-        success: function (data) {
-            // showLoader();
-            hideLoader();
-            if (data.success) {
-                $("#careerHelpContent").html(data.Response.content);
-
-                // // create new Image objects for the images
-                let img1 = new Image();
-                let img2 = new Image();
-
-                img1.onload = function () {
-                    image.src = this.src;
-                };
-
-                img2.onload = function () {
-                    image2.src = this.src;
-                };
-
-                $("#appendImages").append(`<img id="careerHelpImg1" class="setLoader" decoding="async" src="${image_url}${data.Response.image}">`)
-                $("#appendImages").append(`<img id="careerHelpImg2" class="setLoader" decoding="async" src="${image_url}${data.Response.image2}">`)
-
-                // // set the src attribute of the Image objects
-                img1.src = `${image_url}${data.Response.image}`;
-                img2.src = `${image_url}${data.Response.image2}`;
-
-            }
-        },
-    });
-}
-
-
-
-//  Career journey section 
-function setJourneyContent() {
-    $.ajax({
-        url: host_url + 'fetchJourneyContent',
-        method: 'get',
-        beforeSend: function (data) {
-            showLoader();
-        },
-        complete: function (data) {
-            hideLoader();
-        },
-        error: function (data) {
-            alert("Something went wrong");
-            hideLoader();
-        },
-        success: function (data) {
-            hideLoader();
-            if (data.success) {
-                $("#careerJourneyContent").html(data.Response.content);
-            }
-        },
-    });
-}
-
-//  Career journey section 
-function setCounsellingContent() {
-    showLoader();
-    $.ajax({
-        url: host_url + 'fetchCounselingContent',
-        method: 'get',
-        beforeSend: function (data) {
-            showLoader();
-        },
-        complete: function (data) {
-            hideLoader();
-        },
-        error: function (data) {
-            alert("Something went wrong");
-            hideLoader();
-        },
-        success: function (data) {
-            hideLoader();
-            if (data.success) {
-                $("#counsellingHeading").html(data.Response.heading);
-                $("#counsellingContent").html(data.Response.content);
-            }
-        },
-    });
-}
-
-// Our Student Success Stories!
-function setSucessContent() {
-    showLoader();
-    $.ajax({
-        url: host_url + 'fetchSuccessStory',
-        method: 'get',
-        beforeSend: function (data) {
-            showLoader();
-        },
-        complete: function (data) {
-            hideLoader();
-        },
-        error: function (data) {
-            alert("Something went wrong");
-            hideLoader();
-        },
-        success: function (data) {
-            hideLoader();
-            if (data.success) {
-                data.Response.map((currentStory) => {
+                 data.Response.success_stories.map((currentStory) => {
                     let storyContent = `
                     <div class="col-6 temonial-1">
                         <img src="img/right-quotation-mark.png" alt="right-quotation-mark">
@@ -275,9 +147,10 @@ function setSucessContent() {
 
                     $("#addSuccessStory").append(storyContent);
                 })
-
             }
         },
+
+
     });
 }
 
@@ -357,7 +230,7 @@ function setTeamMembers() {
     $.ajax({
         url: host_url + 'fetchTeamMember',
         method: 'GET',
-        beforeSend:function(data){
+        beforeSend: function (data) {
             showLoader();
         },
         error: function (data) {
@@ -609,7 +482,7 @@ function setContactUSContent() {
                 $("#cntNo").append(data.Response.contact_num);
                 $("#contactEmail").append(data.Response.email);
                 $("#contactAddress").append(data.Response.address);
-                
+
             }
         },
     });
@@ -1012,10 +885,10 @@ $("#submitCareerSurvey").on("click", () => {
                                 $("#dob").val("");
                                 $("#grade").val("");
                                 localStorage.removeItem("json_string");
-                                
+
                                 // Uncheck all radio buttons in the survey question options
                                 $(".survey-qna input[type='radio']").prop("checked", false);
-                                
+
                             } else {
                                 Swal.fire(response.Message);
                             }

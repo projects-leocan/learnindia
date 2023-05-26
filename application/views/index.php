@@ -93,7 +93,7 @@
                 </div>
                 <div class="underline-class"></div>
                 <div class="sub-title">
-                    <h4 id="counsellingHeading">Connect to a counselorin just 60 secs</h4>
+                    <h4 id="counsellingHeading"></h4>
                     <p id="counsellingContent">
                         <div class="fulfilling-bouncing-circle-spinner mx-auto" >
                             <div class="circle"></div>
