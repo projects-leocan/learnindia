@@ -149,8 +149,6 @@ function fetchCombinedContent() {
                 })
             }
         },
-
-
     });
 }
 
@@ -280,6 +278,7 @@ function setTeamMembers() {
 }
 
 
+// fetchAboutCombinedContent
 // BLOG SECTION
 function setBlogContent() {
     $.ajax({
@@ -701,9 +700,7 @@ let pageSize = 5;
 let totalPages = Math.ceil(totalQuestions / pageSize);
 
 generatePaginationLinks(totalPages, currentPage);
-if (window.location.href == base_url + 'survey') {
-    setQuestionnaire(currentPage, pageSize); // Fetch questions for the initial page
-}
+setQuestionnaire(currentPage, pageSize); // Fetch questions for the initial page
 
 
 let json_response = {};
