@@ -25,19 +25,14 @@ $(document).ready(() => {
         fetchAboutCombinedContent();
     }
     if (window.location.href == base_url + 'blog') {
-        setBlogContent();
-        setInnerBlogContent();
-        setCareerArticles();
-        setServeyContent();
+        fetchBlogCombinedContent() 
     }
     if (window.location.href == base_url + 'survey') {
         setServeyContent();
         setQuestionnaire();
     }
     if (window.location.href == base_url + 'Term') {
-        setTermContent();
-        setTermInnerContent();
-        setNewTermsCondition();
+        fetchTermsCombinedContent();
     }
     if (window.location.href == base_url + 'contactUs') {
         // setContactUSContent();
@@ -212,9 +207,9 @@ function fetchAboutCombinedContent() {
 
 
 // BLOG SECTION
-function setBlogContent() {
+function fetchBlogCombinedContent() {
     $.ajax({
-        url: host_url + 'fetchBlogContent',
+        url: host_url + 'fetchBlogCombinedContent',
         method: 'get',
         beforeSend: function (data) {
             showLoader();
@@ -227,55 +222,11 @@ function setBlogContent() {
             hideLoader();
         },
         success: function (data) {
-            hideLoader();
             if (data.success) {
-                $("#blogContent").html(data.Response.content);
-            }
-        },
-    });
-}
+                $("#blogContent").html(data.Response.blog[0].content);
+                $("#blogInnerContent").html(data.Response.bloginner[0].content);
 
-function setInnerBlogContent() {
-    $.ajax({
-        url: host_url + 'fetchblogInnerContent',
-        method: 'get',
-        beforeSend: function (data) {
-            showLoader();
-        },
-        complete: function (data) {
-            hideLoader();
-        },
-        error: function (data) {
-            alert("Something went wrong");
-            hideLoader();
-        },
-        success: function (data) {
-            hideLoader();
-            if (data.success) {
-                $("#blogInnerContent").html(data.Response.content);
-            }
-        },
-    });
-}
-
-function setCareerArticles() {
-    $.ajax({
-        url: host_url + 'fetchCareerArticles',
-        method: 'get',
-        beforeSend: function (data) {
-            showLoader();
-        },
-        complete: function (data) {
-            hideLoader();
-        },
-        error: function (data) {
-            alert("Something went wrong");
-            hideLoader();
-        },
-        success: function (data) {
-            hideLoader();
-            if (data.success) {
-                data.Response.map((currentArticle, index) => {
+                data.Response.career_articles.map((currentArticle, index) => {
                     $("#appendArticleContent").append(`
                     <div class="col-4 blog-box" style="margin-top: 100px">
                         <img src="${image_url}${currentArticle.image}" class="card-img-top" alt="blog-1">
@@ -313,51 +264,6 @@ function setServeyContent() {
     });
 }
 
-function setTermContent() {
-    $.ajax({
-        url: host_url + 'fetchTerms',
-        method: 'get',
-        beforeSend: function (data) {
-            showLoader();
-        },
-        complete: function (data) {
-            hideLoader();
-        },
-        error: function (data) {
-            alert("Something went wrong");
-            hideLoader();
-        },
-        success: function (data) {
-            hideLoader();
-            if (data.success) {
-                $("#setTermsContent").html(data.Response.content);
-            }
-        },
-    });
-}
-
-function setTermInnerContent() {
-    $.ajax({
-        url: host_url + 'fetchTermsContent',
-        method: 'get',
-        beforeSend: function (data) {
-            showLoader();
-        },
-        complete: function (data) {
-            hideLoader();
-        },
-        error: function (data) {
-            alert("Something went wrong");
-            hideLoader();
-        },
-        success: function (data) {
-            hideLoader();
-            if (data.success) {
-                $("#setTermsInner").html(data.Response.content);
-            }
-        },
-    });
-}
 
 function setNewTermsCondition() {
     $.ajax({
@@ -386,6 +292,37 @@ function setNewTermsCondition() {
         },
     });
 }
+
+// fetchTermsCombinedContent
+function fetchTermsCombinedContent() {
+    $.ajax({
+        url: host_url + 'fetchTermsCombinedContent',
+        method: 'get',
+        beforeSend: function (data) {
+            showLoader();
+        },
+        complete: function (data) {
+            hideLoader();
+        },
+        error: function (data) {
+            alert("Something went wrong");
+            hideLoader();
+        },
+        success: function (data) {
+            if (data.success) {
+                $("#setTermsContent").html(data.Response.terms[0].content);
+                $("#setTermsInner").html(data.Response.add_terms[0].content);
+                data.Response.terms_condition.map((currentTerms, index) => {
+                    $("#addNewTerms").append(`<div class="text-details">
+                    <h4>${index + 1}. ${currentTerms.heading}</h4>
+                    <p> ${currentTerms.content}</p>
+                </div>`);
+                })
+            }
+        },
+    });
+}
+
 
 function setContactUSContent() {
     $.ajax({
