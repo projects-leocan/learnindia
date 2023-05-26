@@ -3,7 +3,7 @@
     <main>
         <section>
             <div class="slider">
-                <img src="img/contact.jpg" loading="eager" class="d-block w-100" alt="slider">
+                <img src="img/contact.jpg" loading="lazy" class="d-block w-100" alt="slider">
                 <div class="overlay"></div>
                 <div class="caption container">
                     <h1>Contact us</h1>
