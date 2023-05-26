@@ -13,7 +13,7 @@ const image_url = "https://leocan.co/subFolder/learnIndiaWeb/API/uploads/";
 
 $(document).ready(() => {
 
-    if (window.location.href == base_url ) {
+    if (window.location.href == base_url) {
         fetchCombinedContent();
     }
 
@@ -132,9 +132,9 @@ function fetchCombinedContent() {
 
                 $("#counsellingHeading").html(data.Response.counseling[0].heading);
                 $("#counsellingContent").html(data.Response.counseling[0].content);
-                
 
-                 data.Response.success_stories.map((currentStory) => {
+
+                data.Response.success_stories.map((currentStory) => {
                     let storyContent = `
                     <div class="col-6 temonial-1">
                         <img src="img/right-quotation-mark.png" alt="right-quotation-mark">
@@ -701,36 +701,12 @@ let pageSize = 5;
 let totalPages = Math.ceil(totalQuestions / pageSize);
 
 generatePaginationLinks(totalPages, currentPage);
-setQuestionnaire(currentPage, pageSize); // Fetch questions for the initial page
+if (window.location.href == base_url + 'survey') {
+    setQuestionnaire(currentPage, pageSize); // Fetch questions for the initial page
+}
 
 
 let json_response = {};
-
-// $(document).on("click", ".selectOption", function (e) {
-
-//     let email = $("#email").val();
-//     let questionId = $(this).closest(".survey-qna").attr("question_id");
-//     let optionId = $(this).attr("option_id");
-//     let selectedAnswer = $(this).val();
-
-//     // Check if the question exists in the JSON object
-//     if (!json_response.hasOwnProperty(questionId)) {
-//         json_response[questionId] = {
-//             "question_id": questionId,
-//             "answers": []
-//         };
-//     }
-
-//     // Add the selected answer to the question's answers array
-//     json_response[questionId].answers.push({
-//         "option_id": optionId,
-//         "answer": selectedAnswer,
-//         "user_name": email
-//     });
-
-//     let json_string = JSON.stringify(json_response);
-//     localStorage.setItem("json_string", json_string);
-// });
 
 
 $(document).on("click", ".selectOption", function (e) {
