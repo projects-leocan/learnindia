@@ -22,10 +22,7 @@ $(document).ready(() => {
     }
 
     if (window.location.href == base_url + 'aboutUs') {
-        setAboutContent();
-        setInnerAboutContent();
-        setEducationLogo();
-        setTeamMembers();
+        fetchAboutCombinedContent();
     }
     if (window.location.href == base_url + 'blog') {
         setBlogContent();
@@ -153,9 +150,9 @@ function fetchCombinedContent() {
 }
 
 // ABOUT US 
-function setAboutContent() {
+function fetchAboutCombinedContent() {
     $.ajax({
-        url: host_url + 'fetchAbout',
+        url: host_url + 'fetchAboutCombinedContent',
         method: 'get',
         beforeSend: function (data) {
             showLoader();
@@ -168,76 +165,15 @@ function setAboutContent() {
             hideLoader();
         },
         success: function (data) {
-            hideLoader();
             if (data.success) {
-                $("#aboutMain").html(data.Response.content);
-            }
-        },
-    });
-}
-
-function setInnerAboutContent() {
-    $.ajax({
-        url: host_url + 'fetchAboutInner',
-        method: 'get',
-        beforeSend: function (data) {
-            showLoader();
-        },
-        complete: function (data) {
-            hideLoader();
-        },
-        error: function (data) {
-            alert("Something went wrong");
-            hideLoader();
-        },
-        success: function (data) {
-            hideLoader();
-            if (data.success) {
-                $("#aboutInner").html(data.Response.content);
-            }
-        },
-    });
-}
-
-function setEducationLogo() {
-    $.ajax({
-        url: host_url + 'fetchEducationLogo',
-        method: 'get',
-        beforeSend: function (data) {
-            showLoader();
-        },
-        complete: function (data) {
-            hideLoader();
-        },
-        error: function (data) {
-            alert("Something went wrong");
-            hideLoader();
-        },
-        success: function (data) {
-            hideLoader();
-            if (data.success) {
-                data.Response.map((logo) => {
+                $("#aboutMain").html(data.Response.about_main[0].content);
+                $("#aboutInner").html(data.Response.about_inner[0].content);
+                data.Response.education_logo.map((logo) => {
                     $("#setEducationLogo").append(` <img src="${image_url}${logo.image}" alt="school">`);
                 })
-            }
-        },
-    });
-}
 
-function setTeamMembers() {
-    $.ajax({
-        url: host_url + 'fetchTeamMember',
-        method: 'GET',
-        beforeSend: function (data) {
-            showLoader();
-        },
-        error: function (data) {
-            alert("Something went wrong");
-            hideLoader();
-        },
-        success: function (data) {
-            if (data.success) {
-                let teamMembers = data.Response;
+
+                let teamMembers = data.Response.our_team;
 
                 // Create a fragment to hold the appended HTML
                 let fragment = document.createDocumentFragment();
@@ -271,14 +207,10 @@ function setTeamMembers() {
                 $("#appendTeamMembers").append(fragment);
             }
         },
-        complete: function (data) {
-            hideLoader();
-        }
     });
 }
 
 
-// fetchAboutCombinedContent
 // BLOG SECTION
 function setBlogContent() {
     $.ajax({
