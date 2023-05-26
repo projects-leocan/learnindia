@@ -3,9 +3,36 @@
     box-sizing: border-box;
 }
 
+::selection{
+    background-color:#FF7A3D;
+    color:#000000;
+}
 .GOContact{
     cursor: pointer;
 }
+
+.b-design {
+    /* Initial styles */
+    background: transparent;
+    color: inherit;
+    cursor: auto;
+    /* Add transition properties */
+    transition: background 0.3s ease, color 0.3s ease, cursor 0.3s ease;
+}
+
+.b-design:hover {
+    /* Hover styles */
+    background: #FF671F;
+    color: #fff !important;
+    cursor: pointer !important;
+}
+
+
+/* .b-design:hover{
+    background: #FF671F;
+    color: #fff !important;
+    cursor: pointer !important;
+} */
 
 ul,
 ol {
@@ -193,6 +220,15 @@ body {
     font-family: 'poppinssemibold';
     color: #FF671F;
     margin-top: 100px;
+    /* Add transition properties */
+    transition: background 0.3s ease, color 0.3s ease, cursor 0.3s ease;
+}
+
+.details .button-2:hover {
+    /* Hover styles */
+    background: #FF671F;
+    color: #fff !important;
+    cursor: pointer !important;
 }
 
 .title {

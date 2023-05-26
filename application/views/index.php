@@ -17,7 +17,7 @@
                     <div class="orbit"></div>
                 </div>
                 </p>
-                <div class="button GOContact">
+                <div class="button GOContact b-design">
                     Contact us
                 </div>
             </div>
@@ -51,7 +51,7 @@
                     </div>
 
                 </div>
-                <div class="button-2 GOContact">
+                <div class="b-design button-2 GOContact">
                     Contact us
                 </div>
             </div>
@@ -75,7 +75,7 @@
                             <div class="orbit"></div>
                     </div>
                     </p>
-                    <div class="new-btn">
+                    <div class="new-btn b-design">
                         Find your right fit
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                             <div class="orbit"></div>
                         </div>
                     </p>
-                    <div class="new-btn">
+                    <div class="new-btn b-design">
                         Find your right fit
                     </div>
                 </div>

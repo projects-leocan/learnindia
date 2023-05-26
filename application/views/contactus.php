@@ -39,7 +39,7 @@
                                     <a href="#"><i class="fa-brands fa-google"></i></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa-brands fa-instagram"></i></i></a>
+                                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
                                 </li>
                                 <li>
                                     <a href="#"><i class="fa-brands fa-facebook"></i></a>
@@ -58,7 +58,7 @@
                             <input type="email" id="email" name="email" placeholder="Email">
                             <textarea rows="4" cols="50" name="comment" id="message"  form="usrform"
                                 placeholder="your Message"></textarea>
-                            <div class="button" id="submitContactForm">Submit</div>
+                            <div class="button" id="submitContactForm" style="cursor: pointer;">Submit</div>
                         </div>
                     </div>
                 </div>
