@@ -43,7 +43,7 @@
                         <p>Last Name : &nbsp;&nbsp;<input type="text" id="lname" class="fname" name="fname"></p>
                         <p>Year of Birth :<input type="date" id="dob" class="fname year" name="birthday"></p>
                         <p>
-                            Grade :<select name="cars" id="grade">
+                            Grade:<select name="cars" id="grade">
                                 <option value="volvo">Please Select</option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
