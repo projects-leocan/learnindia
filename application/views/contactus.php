@@ -57,7 +57,7 @@
                             <input type="text" id="fname" name="fname" placeholder="Name"><br>
                             <input type="email" id="email" name="email" placeholder="Email">
                             <textarea rows="4" cols="50" name="comment" id="message"  form="usrform"
-                                placeholder="your Message"></textarea>
+                                placeholder="Your Message"></textarea>
                             <div class="button" id="submitContactForm" style="cursor: pointer;">Submit</div>
                         </div>
                     </div>
