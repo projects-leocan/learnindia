@@ -97,6 +97,20 @@ $(".goCS").on("click", function (event) {
     window.location = 'contactUs';
 });
 
+// COMMON NAVIGATIONS
+$("#homeNav1").on("click", function (event) {
+    window.location = 'home';
+});
+$("#homeNav2").on("click", function (event) {
+    window.location = 'home';
+});
+$("#homeNav3").on("click", function (event) {
+    window.location = 'home';
+});
+$("#homeNav4").on("click", function (event) {
+    window.location = 'home';
+});
+
 
 // fetchCombinedContent
 

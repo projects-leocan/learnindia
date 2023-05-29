@@ -75,7 +75,7 @@
                             <div class="orbit"></div>
                     </div>
                     </p>
-                    <div class="new-btn b-design">
+                    <div class="new-btn b-design" id="homeNav1">
                         Find your right fit
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                             <div class="orbit"></div>
                         </div>
                     </p>
-                    <div class="new-btn b-design">
+                    <div class="new-btn b-design" id="homeNav2">
                         Find your right fit
                     </div>
                 </div>

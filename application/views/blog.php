@@ -33,7 +33,7 @@
                         </div>
                     </p>
 
-                    <div class="new-btn b-design">
+                    <div class="new-btn b-design" id="homeNav4">
                         Find your right fit
                     </div>
                 </div>
