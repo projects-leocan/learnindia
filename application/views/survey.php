@@ -28,10 +28,10 @@
                 <div class="row input-box">
                     <div class="col-6">
                         <!-- <input type="text" class="fname" name="fname" placeholder="Name"><br> -->
-                        <p>First Name : <input type="text" id="fname" class="fname" name="fname"></p>
-                        <p>Email : <input type="email" id="email" class="fname" name="email"></p>
+                        <p>First Name : &nbsp;&nbsp;<input type="text" id="fname" class="fname" name="fname"></p>
+                        <p>Email : &nbsp;&nbsp;<input type="email" id="email" class="fname" name="email"> </p>
                         <p>
-                            Gender:<select name="cars" id="gender">
+                            Gender&nbsp;:<select name="cars" id="gender">
                                 <option value="volvo">Please Select</option>
                                 <option value="female">Female</option>
                                 <option value="male">Male</option>
@@ -40,8 +40,8 @@
                         </p>
                     </div>
                     <div class="col-6">
-                        <p>Last Name : <input type="text" id="lname" class="fname" name="fname"></p>
-                        <p>Year of Birth : <input type="date" id="dob" class="fname year" name="birthday"></p>
+                        <p>Last Name : &nbsp;&nbsp;<input type="text" id="lname" class="fname" name="fname"></p>
+                        <p>Year of Birth :<input type="date" id="dob" class="fname year" name="birthday"></p>
                         <p>
                             Grade :<select name="cars" id="grade">
                                 <option value="volvo">Please Select</option>
