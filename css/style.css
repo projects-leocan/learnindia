@@ -97,7 +97,7 @@ body {
 }
 
 .slider img {
-    height: 700px;
+    height: 1100px !important;
     object-fit: cover;
 }
 
@@ -815,7 +815,7 @@ body {
     }
 
     .slider img {
-        height: 760px;
+        height: 1100px;
     }
 
     .col-4 {
