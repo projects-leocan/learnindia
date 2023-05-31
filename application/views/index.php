@@ -11,7 +11,7 @@
 <main>
     <section>
         <div class="slider">
-            <img src="img/slider.jpg"   loading="lazy"  class="d-block w-100" alt="slider">
+            <img src="img/slider.png"   loading="lazy"  class="d-block w-100" alt="slider">
             <div class="overlay"></div>
             <div class="caption container">
                 <h1>Key To Success</h1>
@@ -30,7 +30,7 @@
 
     <section>
         <div class="help">
-            <img src="img/help.jpg" loading="lazy" class="d-block w-100" alt="slider">
+            <img src="img/help.png" loading="lazy" class="d-block w-100" alt="slider">
             <div class="overlay-2"></div>
             <div class="details container">
                 <div class="title">
@@ -89,7 +89,7 @@
 
     <section>
         <div class="seling">
-            <img src="img/kids.jpg" loading="lazy" class="d-block w-100" alt="slider">
+            <img src="img/couns.png" loading="lazy" class="d-block w-100" alt="slider">
             <div class="overlay-2"></div>
             <div class="details container">
                 <div class="title">
