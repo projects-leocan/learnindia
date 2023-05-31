@@ -155,7 +155,7 @@ function fetchCombinedContent() {
                                 <div class="partial-content">${partialContent}</div>
                                 <div class="full-content hidden">${fullContent}</div> 
                             </div>
-                            <div class="button" style="cursor:pointer;">Read More</div>
+                            <div class="button btn-success-story-read-more" style="cursor:pointer;">Read More</div>
                         </div>`;
 
                     $("#addSuccessStory").append(storyContent);
@@ -167,7 +167,7 @@ function fetchCombinedContent() {
 
 
 // Add a click event listener to toggle visibility of full content
-$(document).on("click", ".button", function () {
+$(document).on("click", ".btn-success-story-read-more", function () {
     let contentContainer = $(this).prev(".content-container");
 
     contentContainer.find(".partial-content").toggleClass("hidden");
@@ -580,6 +580,7 @@ function setQuestionnaire(pageNumber, pageSize) {
         success: function (data) {
             hideLoader();
             if (data.success) {
+                console.log("data :",data);
                 localStorage.setItem("totalQuestions", data.totalQuestions);
 
                 $("#setQuestion").empty();   // Clear the previous content
@@ -598,7 +599,7 @@ function setQuestionnaire(pageNumber, pageSize) {
                             }
                         }
                         return `
-                            <input type="radio" class="selectOption" name="fav_language_${response.id}" option_id="${option}" value="${option}" ${checked}>
+                            <input type="radio" class="selectOption" name="fav_language_${response.id}" option_id="${response.id}" value="${option}" ${checked}>
                             <label for="${option}">${option}</label><br>`;
                     }).join("");
 
