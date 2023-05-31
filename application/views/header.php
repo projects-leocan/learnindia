@@ -22,6 +22,8 @@
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <title>LearnIndia</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
 </head>
 
 <body>
