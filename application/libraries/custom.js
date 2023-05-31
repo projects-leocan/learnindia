@@ -25,11 +25,14 @@ $(document).ready(() => {
         fetchAboutCombinedContent();
     }
     if (window.location.href == base_url + 'blog') {
-        fetchBlogCombinedContent() 
+        fetchBlogCombinedContent()
     }
     if (window.location.href == base_url + 'survey') {
         setServeyContent();
         setQuestionnaire();
+
+        // Clear stored answers when the page reloads
+        localStorage.removeItem("json_string");
     }
     if (window.location.href == base_url + 'Term') {
         fetchTermsCombinedContent();
@@ -143,7 +146,7 @@ function fetchCombinedContent() {
                 data.Response.success_stories.map((currentStory) => {
                     let partialContent = currentStory.content.slice(0, 100) + '...';
                     let fullContent = currentStory.content;
-                
+
                     let storyContent = `
                         <div class="col-6 temonial-1">
                             <img src="img/right-quotation-mark.png" alt="right-quotation-mark">
@@ -154,7 +157,7 @@ function fetchCombinedContent() {
                             </div>
                             <div class="button" style="cursor:pointer;">Read More</div>
                         </div>`;
-                
+
                     $("#addSuccessStory").append(storyContent);
                 });
             }
@@ -164,13 +167,13 @@ function fetchCombinedContent() {
 
 
 // Add a click event listener to toggle visibility of full content
-$(document).on("click", ".button", function() {
+$(document).on("click", ".button", function () {
     let contentContainer = $(this).prev(".content-container");
 
     contentContainer.find(".partial-content").toggleClass("hidden");
     contentContainer.find(".full-content").toggleClass("hidden");
 
-    $(this).text(function(_, text) {
+    $(this).text(function (_, text) {
         return text === "Read More" ? "Read Less" : "Read More";
     });
 });
@@ -511,6 +514,31 @@ function setQuestionnaire(pageNumber, pageSize) {
             alert("Something went wrong");
             hideLoader();
         },
+        // success: function (data) {
+        //     hideLoader();
+        //     if (data.success) {
+        //         localStorage.setItem("totalQuestions", data.totalQuestions);
+
+        //         $("#setQuestion").empty();   // Clear the previous content
+        //         $("#setQuestion").html(data.Response.content);
+
+        //         // data.Response.forEach((response, index) => {
+
+        //         //     let options = response.options.split(", "); // Split the options by comma separator
+
+        //         //     let optionsHtml = options.map((option) => {
+        //         //         return `
+        //         //             <input type="radio" class="selectOption" name="fav_language_${response.id}"  option_id="${response.id}" value="${option}">
+        //         //             <label for="${option}">${option}</label><br>`;
+        //         //     }).join("");
+
+        //         //     $("#setQuestion").append(`
+        //         //           <div class="survey-qna" question_id="${response.id}">
+        //         //             ${response.question}
+        //         //             ${optionsHtml}
+        //         //           </div>
+        //         //         `);
+        //         // });
         success: function (data) {
             hideLoader();
             if (data.success) {
@@ -520,21 +548,28 @@ function setQuestionnaire(pageNumber, pageSize) {
                 $("#setQuestion").html(data.Response.content);
 
                 data.Response.forEach((response, index) => {
-
                     let options = response.options.split(", "); // Split the options by comma separator
 
                     let optionsHtml = options.map((option) => {
+                        let checked = "";
+                        let storedAnswers = json_response[response.id]?.answers;
+                        if (storedAnswers) {
+                            let storedAnswer = storedAnswers.find((answer) => answer.option_id === option);
+                            if (storedAnswer) {
+                                checked = "checked";
+                            }
+                        }
                         return `
-                            <input type="radio" class="selectOption" name="fav_language_${response.id}"  option_id="${response.id}" value="${option}">
+                            <input type="radio" class="selectOption" name="fav_language_${response.id}" option_id="${option}" value="${option}" ${checked}>
                             <label for="${option}">${option}</label><br>`;
                     }).join("");
 
                     $("#setQuestion").append(`
-                          <div class="survey-qna" question_id="${response.id}">
+                        <div class="survey-qna" question_id="${response.id}">
                             ${response.question}
                             ${optionsHtml}
-                          </div>
-                        `);
+                        </div>
+                    `);
                 });
             }
         },
@@ -604,8 +639,8 @@ generatePaginationLinks(totalPages, currentPage);
 setQuestionnaire(currentPage, pageSize); // Fetch questions for the initial page
 
 
-let json_response = {};
-
+// Load the JSON response from localStorage if it exists
+let json_response = JSON.parse(localStorage.getItem("json_string")) || {};
 
 $(document).on("click", ".selectOption", function (e) {
     let email = $("#email").val();
@@ -631,6 +666,7 @@ $(document).on("click", ".selectOption", function (e) {
         "user_name": email
     });
 
+    // Store the updated JSON response in localStorage
     let json_string = JSON.stringify(json_response);
     localStorage.setItem("json_string", json_string);
 });
