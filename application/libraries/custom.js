@@ -141,22 +141,40 @@ function fetchCombinedContent() {
 
 
                 data.Response.success_stories.map((currentStory) => {
+                    let partialContent = currentStory.content.slice(0, 100) + '...';
+                    let fullContent = currentStory.content;
+                
                     let storyContent = `
-                    <div class="col-6 temonial-1">
-                        <img src="img/right-quotation-mark.png" alt="right-quotation-mark">
-                        <h4 id="studentName">${currentStory.student_name}</h4>
-                        <p id="studentStory">
-                        ${currentStory.content}
-                        </p>
-                        <div class="button">Read More</div>
-                    </div>`;
-
+                        <div class="col-6 temonial-1">
+                            <img src="img/right-quotation-mark.png" alt="right-quotation-mark">
+                            <h4 id="studentName">${currentStory.student_name}</h4>
+                            <div class="content-container">
+                                <div class="partial-content">${partialContent}</div>
+                                <div class="full-content hidden">${fullContent}</div> 
+                            </div>
+                            <div class="button" style="cursor:pointer;">Read More</div>
+                        </div>`;
+                
                     $("#addSuccessStory").append(storyContent);
-                })
+                });
             }
         },
     });
 }
+
+
+// Add a click event listener to toggle visibility of full content
+$(document).on("click", ".button", function() {
+    let contentContainer = $(this).prev(".content-container");
+
+    contentContainer.find(".partial-content").toggleClass("hidden");
+    contentContainer.find(".full-content").toggleClass("hidden");
+
+    $(this).text(function(_, text) {
+        return text === "Read More" ? "Read Less" : "Read More";
+    });
+});
+
 
 // ABOUT US 
 function fetchAboutCombinedContent() {

@@ -2,6 +2,10 @@
 .setLoader {
     background: url(img/loading.gif) 50% no-repeat;
 }
+
+.hidden {
+    display: none;
+}
 </style>
 <!-- HEADER -->
 <main>
