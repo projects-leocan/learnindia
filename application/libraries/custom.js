@@ -488,13 +488,76 @@ function isValidEmail(email) {
 }
 
 let currentPage = 1; // Initialize current page number
+// function setQuestionnaire(pageNumber, pageSize) {
+
+
+//     let data = new FormData();
+//     data.append('page_num', pageNumber);
+//     data.append('page_size', pageSize)
+
+
+//     $.ajax({
+//         url: host_url + 'fetchQuestionnaire',
+//         type: "POST",
+//         data: data,
+//         cache: false,
+//         processData: false,
+//         contentType: false,
+//         dataType: false,
+//         beforeSend: function (data) {
+//             showLoader();
+//         },
+//         complete: function (data) {
+//             hideLoader();
+//         },
+//         error: function (data) {
+//             alert("Something went wrong");
+//             hideLoader();
+//         },
+//         success: function (data) {
+//             hideLoader();
+//             if (data.success) {
+//                 localStorage.setItem("totalQuestions", data.totalQuestions);
+
+//                 $("#setQuestion").empty();   // Clear the previous content
+//                 $("#setQuestion").html(data.Response.content);
+
+//                 data.Response.forEach((response, index) => {
+//                     let options = response.options.split(", "); // Split the options by comma separator
+
+//                     let optionsHtml = options.map((option) => {
+//                         let checked = "";
+//                         let storedAnswers = json_response[response.id]?.answers;
+//                         if (storedAnswers) {
+//                             let storedAnswer = storedAnswers.find((answer) => answer.option_id === option);
+//                             if (storedAnswer) {
+//                                 checked = "checked";
+//                             }
+//                         }
+//                         return `
+//                             <input type="radio" class="selectOption" name="fav_language_${response.id}" option_id="${option}" value="${option}" ${checked}>
+//                             <label for="${option}">${option}</label><br>`;
+//                     }).join("");
+
+//                     $("#setQuestion").append(`
+//                         <div class="survey-qna" question_id="${response.id}">
+//                             ${response.question}
+//                             ${optionsHtml}
+//                         </div>
+//                     `);
+//                 });
+//             }
+//         },
+//     });
+
+//     // Update the current page number
+//     currentPage = pageNumber;
+// }
+
 function setQuestionnaire(pageNumber, pageSize) {
-
-
     let data = new FormData();
     data.append('page_num', pageNumber);
     data.append('page_size', pageSize)
-
 
     $.ajax({
         url: host_url + 'fetchQuestionnaire',
@@ -503,7 +566,7 @@ function setQuestionnaire(pageNumber, pageSize) {
         cache: false,
         processData: false,
         contentType: false,
-        dataType: false,
+        dataType: "json",  // Set the data type to JSON
         beforeSend: function (data) {
             showLoader();
         },
@@ -514,31 +577,6 @@ function setQuestionnaire(pageNumber, pageSize) {
             alert("Something went wrong");
             hideLoader();
         },
-        // success: function (data) {
-        //     hideLoader();
-        //     if (data.success) {
-        //         localStorage.setItem("totalQuestions", data.totalQuestions);
-
-        //         $("#setQuestion").empty();   // Clear the previous content
-        //         $("#setQuestion").html(data.Response.content);
-
-        //         // data.Response.forEach((response, index) => {
-
-        //         //     let options = response.options.split(", "); // Split the options by comma separator
-
-        //         //     let optionsHtml = options.map((option) => {
-        //         //         return `
-        //         //             <input type="radio" class="selectOption" name="fav_language_${response.id}"  option_id="${response.id}" value="${option}">
-        //         //             <label for="${option}">${option}</label><br>`;
-        //         //     }).join("");
-
-        //         //     $("#setQuestion").append(`
-        //         //           <div class="survey-qna" question_id="${response.id}">
-        //         //             ${response.question}
-        //         //             ${optionsHtml}
-        //         //           </div>
-        //         //         `);
-        //         // });
         success: function (data) {
             hideLoader();
             if (data.success) {
@@ -578,6 +616,7 @@ function setQuestionnaire(pageNumber, pageSize) {
     // Update the current page number
     currentPage = pageNumber;
 }
+
 
 function generatePaginationLinks(totalPages, currentPage) {
     let paginationContainer = $(".pagination");
@@ -650,27 +689,26 @@ $(document).on("click", ".selectOption", function (e) {
 
     // Check if the question exists in the JSON object
     if (!json_response.hasOwnProperty(questionId)) {
-        json_response[questionId] = {
-            "question_id": questionId,
-            "answers": []
-        };
+      json_response[questionId] = {
+        "question_id": questionId,
+        "answers": []
+      };
     }
 
-    // Remove any previous answer for the same question and option
-    json_response[questionId].answers = json_response[questionId].answers.filter(answer => answer.option_id !== optionId);
+    // Remove any previous answer for the same question
+    json_response[questionId].answers = json_response[questionId].answers.filter(answer => answer.user_name !== email);
 
     // Add the selected answer to the question's answers array
     json_response[questionId].answers.push({
-        "option_id": optionId,
-        "answer": selectedAnswer,
-        "user_name": email
+      "option_id": optionId,
+      "answer": selectedAnswer,
+      "user_name": email
     });
 
     // Store the updated JSON response in localStorage
     let json_string = JSON.stringify(json_response);
     localStorage.setItem("json_string", json_string);
-});
-
+  });
 
 $("#submitCareerSurvey").on("click", () => {
 
