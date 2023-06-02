@@ -36,6 +36,18 @@ html, body {
     cursor: pointer;
 }
 
+.otherText {
+    display: none;
+    padding: 6px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'poppinsregular';
+    font-size: 20px;
+    width: 200px;
+    outline: none;
+  }
+
 .b-design {
     /* Initial styles */
     background: transparent;

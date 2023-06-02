@@ -133,6 +133,7 @@ function fetchCombinedContent() {
         },
         success: function (data) {
             if (data.success) {
+                console.log("data :", data);
                 $("#keyToSuccessContent").html(data.Response.home[0].content);
                 $("#careerHelpContent").html(data.Response.career_guidance[0].content);
                 $("#appendImages").append(`<img id="careerHelpImg1" loading="eager" class="setLoader" src="${image_url}${data.Response.career_guidance[0].image}">`)
@@ -488,13 +489,12 @@ function isValidEmail(email) {
 }
 
 let currentPage = 1; // Initialize current page number
+
+// // working 
 // function setQuestionnaire(pageNumber, pageSize) {
-
-
 //     let data = new FormData();
 //     data.append('page_num', pageNumber);
 //     data.append('page_size', pageSize)
-
 
 //     $.ajax({
 //         url: host_url + 'fetchQuestionnaire',
@@ -503,7 +503,7 @@ let currentPage = 1; // Initialize current page number
 //         cache: false,
 //         processData: false,
 //         contentType: false,
-//         dataType: false,
+//         dataType: "json",  // Set the data type to JSON
 //         beforeSend: function (data) {
 //             showLoader();
 //         },
@@ -529,23 +529,73 @@ let currentPage = 1; // Initialize current page number
 //                         let checked = "";
 //                         let storedAnswers = json_response[response.id]?.answers;
 //                         if (storedAnswers) {
-//                             let storedAnswer = storedAnswers.find((answer) => answer.option_id === option);
+//                             let storedAnswer = storedAnswers.find((answer) => answer.answer === option);
 //                             if (storedAnswer) {
 //                                 checked = "checked";
 //                             }
 //                         }
 //                         return `
-//                             <input type="radio" class="selectOption" name="fav_language_${response.id}" option_id="${option}" value="${option}" ${checked}>
-//                             <label for="${option}">${option}</label><br>`;
+//                 <input type="radio" class="selectOption" name="fav_language_${response.id}" option_id="${response.id}" value="${option}" ${checked}>
+//                 <label for="${option}">${option}</label><br>`;
 //                     }).join("");
 
+//                     // Add the "Other" option with a text box
+//                     optionsHtml += `
+//               <input type="radio" class="selectOption" name="fav_language_${response.id}" option_id="${response.id}" value="other">
+//               <label for="other">Other</label>
+//               <input type="text" class="otherText" name="other_text_${response.id}" style="display: none;">`;
+
 //                     $("#setQuestion").append(`
-//                         <div class="survey-qna" question_id="${response.id}">
-//                             ${response.question}
-//                             ${optionsHtml}
-//                         </div>
-//                     `);
+//               <div class="survey-qna" question_id="${response.id}">
+//                 ${response.question}
+//                 ${optionsHtml}
+//               </div>
+//             `);
 //                 });
+
+//                 // Restore selected options and entered answers
+//                 for (let questionId in json_response) {
+//                     let storedAnswers = json_response[questionId]?.answers;
+//                     if (storedAnswers) {
+//                         storedAnswers.forEach((answer) => {
+//                             let optionId = answer.option_id;
+//                             // console.log(:);
+//                             let answerValue = answer.answer;
+
+//                             let optionElement = $(`input[name="fav_language_${questionId}"][value="${optionId}"]`);
+//                             if (optionElement.length > 0) {
+//                                 optionElement.prop("checked", true);
+
+//                                 if (optionId === "other") {
+//                                     let otherTextElement = $(`input[name="other_text_${questionId}"]`);
+//                                     otherTextElement.val(answerValue).show();
+//                                 }
+//                             }
+//                         });
+//                     }
+//                 }
+
+//                 // Show/hide the text box when the "Other" option is selected/deselected
+//                 $(".otherText").on("input", function () {
+//                     let questionId = $(this).attr("name").split("_")[2];
+//                     let answerValue = $(this).val();
+
+//                     let storedAnswers = localStorage.getItem(`answer_${questionId}`);
+//                     let storedAnswerArray = storedAnswers ? JSON.parse(storedAnswers) : [];
+
+//                     let storedAnswer = storedAnswerArray.find((answer) => answer.option_id === "other");
+//                     if (storedAnswer) {
+//                         storedAnswer.answer = answerValue;
+//                     } else {
+//                         storedAnswerArray.push({
+//                             option_id: "other",
+//                             answer: answerValue
+//                         });
+//                     }
+
+//                     localStorage.setItem(`answer_${questionId}`, JSON.stringify(storedAnswerArray));
+//                 });
+
 //             }
 //         },
 //     });
@@ -553,6 +603,7 @@ let currentPage = 1; // Initialize current page number
 //     // Update the current page number
 //     currentPage = pageNumber;
 // }
+
 
 function setQuestionnaire(pageNumber, pageSize) {
     let data = new FormData();
@@ -566,7 +617,7 @@ function setQuestionnaire(pageNumber, pageSize) {
         cache: false,
         processData: false,
         contentType: false,
-        dataType: "json",  // Set the data type to JSON
+        dataType: "json",
         beforeSend: function (data) {
             showLoader();
         },
@@ -580,12 +631,10 @@ function setQuestionnaire(pageNumber, pageSize) {
         success: function (data) {
             hideLoader();
             if (data.success) {
-                console.log("data :",data);
                 localStorage.setItem("totalQuestions", data.totalQuestions);
 
-                $("#setQuestion").empty();   // Clear the previous content
+                $("#setQuestion").empty();
                 $("#setQuestion").html(data.Response.content);
-
                 data.Response.forEach((response, index) => {
                     let options = response.options.split(", "); // Split the options by comma separator
 
@@ -593,30 +642,86 @@ function setQuestionnaire(pageNumber, pageSize) {
                         let checked = "";
                         let storedAnswers = json_response[response.id]?.answers;
                         if (storedAnswers) {
-                            let storedAnswer = storedAnswers.find((answer) => answer.option_id === option);
+                            let storedAnswer = storedAnswers.find((answer) => answer.answer === option);
                             if (storedAnswer) {
                                 checked = "checked";
                             }
                         }
                         return `
-                            <input type="radio" class="selectOption" name="fav_language_${response.id}" option_id="${response.id}" value="${option}" ${checked}>
-                            <label for="${option}">${option}</label><br>`;
+                <input type="radio" class="selectOption" name="fav_language_${response.id}" option_id="${response.id}" value="${option}" ${checked}>
+                <label for="${option}">${option}</label><br>`;
                     }).join("");
 
+                    // Add the "Other" option with a text box
+                    optionsHtml += `
+              <input type="radio" class="selectOption" name="fav_language_${response.id}" option_id="${response.id}" value="other">
+              <label for="other">Other</label>
+              <input type="text" class="otherText" name="other_text_${response.id}" style="display: none;">`;
+
                     $("#setQuestion").append(`
-                        <div class="survey-qna" question_id="${response.id}">
-                            ${response.question}
-                            ${optionsHtml}
-                        </div>
-                    `);
+              <div class="survey-qna" question_id="${response.id}">
+                ${response.question}
+                ${optionsHtml}
+              </div>
+            `);
+                });
+
+                // Restore selected options and entered answers
+                for (let questionId in json_response) {
+                    let storedAnswers = json_response[questionId]?.answers;
+                    if (storedAnswers) {
+                        storedAnswers.forEach((answer) => {
+                            let optionId = answer.option_id;
+                            // console.log(:);
+                            let answerValue = answer.answer;
+
+                            let optionElement = $(`input[name="fav_language_${questionId}"][value="${optionId}"]`);
+                            if (optionElement.length > 0) {
+                                optionElement.prop("checked", true);
+
+                                if (optionId === "other") {
+                                    let otherTextElement = $(`input[name="other_text_${questionId}"]`);
+                                    otherTextElement.val(answerValue).show();
+                                }
+                            }
+                        });
+                    }
+                }
+
+                $(".selectOption").change(function () {
+                    if ($(this).val() === "other") {
+                        $(this).siblings(".otherText").show();
+                    } else {
+                        $(this).siblings(".otherText").hide();
+                    }
+                });
+
+                $(".otherText").on("input", function () {
+                    let questionId = $(this).attr("name").split("_")[2];
+                    let answerValue = $(this).val();
+
+                    let storedAnswers = localStorage.getItem(`answer_${questionId}`);
+                    let storedAnswerArray = storedAnswers ? JSON.parse(storedAnswers) : [];
+
+                    let storedAnswer = storedAnswerArray.find((answer) => answer.option_id === "other");
+                    if (storedAnswer) {
+                        storedAnswer.answer = answerValue;
+                    } else {
+                        storedAnswerArray.push({
+                            option_id: "other",
+                            answer: answerValue
+                        });
+                    }
+
+                    localStorage.setItem(`answer_${questionId}`, JSON.stringify(storedAnswerArray));
                 });
             }
         },
     });
 
-    // Update the current page number
     currentPage = pageNumber;
 }
+
 
 
 function generatePaginationLinks(totalPages, currentPage) {
@@ -682,34 +787,187 @@ setQuestionnaire(currentPage, pageSize); // Fetch questions for the initial page
 // Load the JSON response from localStorage if it exists
 let json_response = JSON.parse(localStorage.getItem("json_string")) || {};
 
+// Input event listener for the "Other" option's input box
+$(document).on("input", ".otherText", function () {
+    let email = $("#email").val();
+    let questionId = $(this).closest(".survey-qna").attr("question_id");
+    let optionId = $(this).siblings(".selectOption[option_id]").attr("option_id");
+    let selectedAnswer = $(this).val();
+
+    // Update the selected answer in the JSON response
+    if (json_response.hasOwnProperty(questionId)) {
+        let userAnswers = json_response[questionId].answers.filter(answer => answer.user_name === email);
+        if (userAnswers.length > 0) {
+            userAnswers[0].answer = selectedAnswer;
+        } else {
+            json_response[questionId].answers.push({
+                "option_id": optionId,
+                "answer": selectedAnswer,
+                "user_name": email
+            });
+        }
+    } else {
+        json_response[questionId] = {
+            "question_id": questionId,
+            "answers": []
+        };
+
+        // Add the selected answer to the question's answers array
+        json_response[questionId].answers.push({
+            "option_id": optionId,
+            "answer": selectedAnswer,
+            "user_name": email
+        });
+    }
+
+    // Store the updated JSON response in localStorage
+    let json_string = JSON.stringify(json_response);
+    localStorage.setItem("json_string", json_string);
+});
+
+// Click event listener for the options
 $(document).on("click", ".selectOption", function (e) {
     let email = $("#email").val();
     let questionId = $(this).closest(".survey-qna").attr("question_id");
     let optionId = $(this).attr("option_id");
     let selectedAnswer = $(this).val();
 
+    // Show/hide the "Other" option's input box
+    if (selectedAnswer === "other") {
+        $(this).siblings(".otherText").show();
+    } else {
+        $(this).siblings(".otherText").hide();
+    }
+
     // Check if the question exists in the JSON object
     if (!json_response.hasOwnProperty(questionId)) {
-      json_response[questionId] = {
-        "question_id": questionId,
-        "answers": []
-      };
+        json_response[questionId] = {
+            "question_id": questionId,
+            "answers": []
+        };
     }
 
     // Remove any previous answer for the same question
     json_response[questionId].answers = json_response[questionId].answers.filter(answer => answer.user_name !== email);
 
     // Add the selected answer to the question's answers array
-    json_response[questionId].answers.push({
-      "option_id": optionId,
-      "answer": selectedAnswer,
-      "user_name": email
-    });
+    if (selectedAnswer !== "other") {
+        json_response[questionId].answers.push({
+            "option_id": optionId,
+            "answer": selectedAnswer,
+            "user_name": email
+        });
+    }
 
     // Store the updated JSON response in localStorage
     let json_string = JSON.stringify(json_response);
     localStorage.setItem("json_string", json_string);
-  });
+});
+
+
+
+
+
+// // Load the JSON response from localStorage if it exists
+// let json_response = JSON.parse(localStorage.getItem("json_string")) || {};
+
+// // Input event listener for the "Other" option's input box
+// $(document).on("input", ".otherText", function () {
+//     let email = $("#email").val();
+//     let questionId = $(this).closest(".survey-qna").attr("question_id");
+//     let optionId = $(this).siblings(".selectOption[option_id]").attr("option_id");
+//     let selectedAnswer = $(this).val();
+
+//     // Update the selected answer in the JSON response
+//     if (json_response.hasOwnProperty(questionId)) {
+//         let userAnswers = json_response[questionId].answers.filter(answer => answer.user_name === email);
+//         if (userAnswers.length > 0) {
+//             userAnswers[0].answer = selectedAnswer;
+//         } else {
+//             json_response[questionId].answers.push({
+//                 "option_id": optionId,
+//                 "answer": selectedAnswer,
+//                 "user_name": email
+//             });
+//         }
+//     }
+
+//     // Store the updated JSON response in localStorage
+//     let json_string = JSON.stringify(json_response);
+//     localStorage.setItem("json_string", json_string);
+// });
+
+// // Click event listener for the options
+// $(document).on("click", ".selectOption", function (e) {
+//     let email = $("#email").val();
+//     let questionId = $(this).closest(".survey-qna").attr("question_id");
+//     let optionId = $(this).attr("option_id");
+//     let selectedAnswer = $(this).val();
+
+//     // Show/hide the "Other" option's input box
+//     if (selectedAnswer === "other") {
+//         $(this).siblings(".otherText").show();
+//     } else {
+//         $(this).siblings(".otherText").hide();
+//     }
+
+//     // Check if the question exists in the JSON object
+//     if (!json_response.hasOwnProperty(questionId)) {
+//         json_response[questionId] = {
+//             "question_id": questionId,
+//             "answers": []
+//         };
+//     }
+
+//     // Remove any previous answer for the same question
+//     json_response[questionId].answers = json_response[questionId].answers.filter(answer => answer.user_name !== email);
+
+//     // Add the selected answer to the question's answers array
+//     json_response[questionId].answers.push({
+//         "option_id": optionId,
+//         "answer": selectedAnswer,
+//         "user_name": email
+//     });
+
+//     // Store the updated JSON response in localStorage
+//     let json_string = JSON.stringify(json_response);
+//     localStorage.setItem("json_string", json_string);
+// });
+
+
+
+
+// // Load the JSON response from localStorage if it exists
+// let json_response = JSON.parse(localStorage.getItem("json_string")) || {};
+
+// $(document).on("click", ".selectOption", function (e) {
+//     let email = $("#email").val();
+//     let questionId = $(this).closest(".survey-qna").attr("question_id");
+//     let optionId = $(this).attr("option_id");
+//     let selectedAnswer = $(this).val();
+
+//     // Check if the question exists in the JSON object
+//     if (!json_response.hasOwnProperty(questionId)) {
+//       json_response[questionId] = {
+//         "question_id": questionId,
+//         "answers": []
+//       };
+//     }
+
+//     // Remove any previous answer for the same question
+//     json_response[questionId].answers = json_response[questionId].answers.filter(answer => answer.user_name !== email);
+
+//     // Add the selected answer to the question's answers array
+//     json_response[questionId].answers.push({
+//       "option_id": optionId,
+//       "answer": selectedAnswer,
+//       "user_name": email
+//     });
+
+//     // Store the updated JSON response in localStorage
+//     let json_string = JSON.stringify(json_response);
+//     localStorage.setItem("json_string", json_string);
+//   });
 
 $("#submitCareerSurvey").on("click", () => {
 
