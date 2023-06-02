@@ -4,6 +4,30 @@
     scroll-behavior: smooth;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overscroll-behavior-y: contain;
+  }
+  
+  body {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #121212;
+  }
+
+  /* body {
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #121212;
+} */
+
+
 ::selection{
     background-color:#FF7A3D;
     color:#000000;
@@ -38,14 +62,6 @@
 ul,
 ol {
     padding: 0;
-}
-
-body {
-    font-family: Poppins;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #121212;
 }
 
 .py-100 {
@@ -146,6 +162,15 @@ body {
     background-color: white;
     text-align: center;
     border-radius: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-family: 'poppinssemibold';
+    color: #046A38;
+}
+
+.read-more{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -747,7 +772,8 @@ body {
     }
 
     .explore img {
-        height: 650px;
+        height: 850px;
+        /* height: 650px; */
     }
 
     .caption p {
@@ -782,7 +808,7 @@ body {
     }
 
     .explore img {
-        height: 700px;
+        height: 900px;
     }
 }
 
@@ -1042,6 +1068,13 @@ body {
     .about .seling img {
         height: 1200px;
     }
+}
+
+@media (max-width: 414px){
+    .blog-page .underline-class {
+        margin-bottom: 60px;
+    }
+
 }
 
 @media (max-width:320px) {
