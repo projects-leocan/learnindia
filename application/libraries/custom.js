@@ -1,15 +1,15 @@
 // Local
-// const base_url = "https://leocan.co/subFolder/learnIndiaWeb/web/";
-const base_url = "http://localhost/learnindia/";
+const base_url = "https://leocan.co/subFolder/learnIndiaWeb/web/";
+// const base_url = "http://localhost/learnindia/";
 
 // host URl 
 // Live 
-// const host_url = "https://leocan.co/subFolder/learnIndiaWeb/API/v1/";
-const host_url = "http://localhost/learnindia_API/v1/";
+const host_url = "https://leocan.co/subFolder/learnIndiaWeb/API/v1/";
+// const host_url = "http://localhost/learnindia_API/v1/";
 
 // Image URL 
-// const image_url = "https://leocan.co/subFolder/learnIndiaWeb/API/uploads/";
-const image_url = "http://localhost/learnindia_API/uploads/";
+const image_url = "https://leocan.co/subFolder/learnIndiaWeb/API/uploads/";
+// const image_url = "http://localhost/learnindia_API/uploads/";
 
 $(document).ready(() => {
 
@@ -892,15 +892,30 @@ $("#submitCareerSurvey").on("click", () => {
                                 $("#lname").val("");
                                 $("#dob").val("");
                                 $("#grade").val("");
-                                localStorage.removeItem("json_string");
-
+                        
                                 // Uncheck all radio buttons in the survey question options
                                 $(".survey-qna input[type='radio']").prop("checked", false);
-
+                        
+                                // Clear local storage for all answers
+                                for (let key in localStorage) {
+                                    if (key.startsWith("answer_")) {
+                                        localStorage.removeItem(key);
+                                    }
+                                }
+                        
+                                localStorage.removeItem("json_string");
+                                localStorage.removeItem("questionId");
+                        
+                                // Hide all "Other" input boxes
+                                $(".survey-qna .otherText").each(function () {
+                                    $(this).val('').hide();
+                                });
+                        
                             } else {
                                 Swal.fire(response.Message);
                             }
-                        },
+                        }
+                        
                     });
                 })
             } else {
