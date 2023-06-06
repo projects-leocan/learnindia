@@ -1,15 +1,15 @@
 // Local
-const base_url = "https://leocan.co/subFolder/learnIndiaWeb/web/";
-// const base_url = "http://localhost/learnindia/";
+// const base_url = "https://leocan.co/subFolder/learnIndiaWeb/web/";
+const base_url = "http://localhost/learnindia/";
 
 // host URl 
 // Live 
-const host_url = "https://leocan.co/subFolder/learnIndiaWeb/API/v1/";
-// const host_url = "http://localhost/learnindia_API/v1/";
+// const host_url = "https://leocan.co/subFolder/learnIndiaWeb/API/v1/";
+const host_url = "http://localhost/learnindia_API/v1/";
 
 // Image URL 
-const image_url = "https://leocan.co/subFolder/learnIndiaWeb/API/uploads/";
-// const image_url = "http://localhost/learnindia_API/uploads/";
+// const image_url = "https://leocan.co/subFolder/learnIndiaWeb/API/uploads/";
+const image_url = "http://localhost/learnindia_API/uploads/";
 
 $(document).ready(() => {
 
@@ -158,7 +158,7 @@ function fetchCombinedContent() {
                                 <div class="partial-content">${partialContent}</div>
                                 <div class="full-content hidden">${fullContent}</div> 
                             </div>
-                            <div class="button btn-success-story-read-more" style="cursor:pointer;">Read More</div>
+                            <div class="button btn-success-story-read-more" style="cursor:pointer;margin-bottom: 50px;">Read More</div>
                         </div>`;
 
                     $("#addSuccessStory").append(storyContent);
