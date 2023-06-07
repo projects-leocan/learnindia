@@ -137,9 +137,13 @@ function fetchCombinedContent() {
         success: function (data) {
             if (data.success) {
                 $("#keyToSuccessContent").html(data.Response.home[0].content);
-                $("#careerHelpContent").html(data.Response.career_guidance[0].content);
-                $("#appendImages").append(`<img id="careerHelpImg1" loading="eager" class="setLoader" src="${image_url}${data.Response.career_guidance[0].image}">`)
-                $("#appendImages").append(`<img id="careerHelpImg2" loading="eager" class="setLoader" src="${image_url}${data.Response.career_guidance[0].image2}">`)
+                const careerGuidance = data.Response.career_guidance[data.Response.career_guidance.length - 1];
+                $("#careerHelpContent").html(careerGuidance.content);
+
+                $("#appendImages").append(`<img id="careerHelpImg1" loading="eager" class="setLoader" src="${image_url}${careerGuidance.image}">`)
+                $("#appendImages").append(`<img id="careerHelpImg2" loading="eager" class="setLoader" src="${image_url}${careerGuidance.image2}">`)
+
+
                 $("#careerJourneyContent").html(data.Response.career_journey[0].content);
 
                 $("#counsellingHeading").html(data.Response.counseling[0].heading);
