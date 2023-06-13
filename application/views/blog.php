@@ -27,10 +27,10 @@
                 <div class="underline-class"></div>
                 <div class="sub-title">
                     <p id="blogInnerContent">
-                        <div class="fulfilling-bouncing-circle-spinner mx-auto">
-                            <div class="circle"></div>
-                            <div class="orbit"></div>
-                        </div>
+                    <div class="fulfilling-bouncing-circle-spinner mx-auto">
+                        <div class="circle"></div>
+                        <div class="orbit"></div>
+                    </div>
                     </p>
 
                     <div class="new-btn b-design" id="homeNav4">
@@ -47,15 +47,15 @@
                 <h1>Career articles</h1>
             </div>
             <div class="underline-class"></div>
-            <div class="row mt-0" id="appendArticleContent" >
-                
+            <div class="row mt-0" id="appendArticleContent">
+
             </div>
             <div class="fulfilling-bouncing-circle-spinner mx-auto">
-                            <div class="circle"></div>
-                            <div class="orbit"></div>
+                <div class="circle"></div>
+                <div class="orbit"></div>
             </div>
 
-            
+        </div> <!-- Added closing div for .blog-page -->
     </section>
 </main>
 <!-- FOOTER -->

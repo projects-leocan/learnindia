@@ -1137,7 +1137,13 @@ ol {
 }
 
 .blog-page .row {
-    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Add gap between articles */
+}
+
+.blog-page .row .blog-box {
+    flex-basis: 30%; /* Adjust the width for three articles */
 }
 
 .card-title {
