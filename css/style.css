@@ -923,9 +923,11 @@ ol {
 
 .inner-details .images {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
-    justify-content: space-between;
-    margin-top: 60px;
+    /* justify-content: space-between; */
+    /* margin-top: 60px; */
+    gap: 15%;
 }
 
 .our-team {
@@ -1047,7 +1049,8 @@ ol {
     }
 
     .gray-box {
-        height: 1200px;
+        /* height: 1200px; */
+        height: auto;
     }
 
     .img-1 {

@@ -206,7 +206,7 @@ function fetchAboutCombinedContent() {
                 $("#aboutMain").html(data.Response.about_main[0].content);
                 $("#aboutInner").html(data.Response.about_inner[0].content);
                 data.Response.education_logo.map((logo) => {
-                    $("#setEducationLogo").append(` <img src="${image_url}${logo.image}" alt="school">`);
+                    $("#setEducationLogo").append(` <img style="margin-top:60px;" src="${image_url}${logo.image}" alt="school">`);
                 })
 
 

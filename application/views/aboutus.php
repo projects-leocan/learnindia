@@ -55,11 +55,6 @@
                         <div class="circle"></div>
                         <div class="orbit"></div>
                     </div>
-
-                    <!-- <img src="img/school.png" alt="school">
-                    <img src="img/education.png" alt="education">
-                    <img src="img/school.png" alt="school">
-                    <img src="img/education.png" alt="education"> -->
                 </div>
             </div>
         </div>
